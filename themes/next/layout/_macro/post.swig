@@ -231,15 +231,11 @@
       {%- if theme.follow_me %}
         {{ partial('_partials/post/post-followme.swig', {}, {cache: theme.cache.enable}) }}
       {%- endif %}
-      <div>
-        {% if not is_index %}
-          {% include 'passage-end-tag.swig' %}
-        {% endif %}
-      </div>
+      
       <footer class="post-footer">
         {%- if post.tags and post.tags.length %}
           {%- if theme.tag_icon %}
-            {%- set tag_indicate = '<i class="fa fa-tag"></i>' %}
+            {%- set tag_indicate = '<i class="fa fa-star"></i>' %}
           {% else %}
             {%- set tag_indicate = '#' %}
           {%- endif %}

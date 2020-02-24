@@ -265,7 +265,7 @@ symbols_count_time:
   wpm: 275
 
 # Use icon instead of the symbol # to indicate the tag at the bottom of the post
-tag_icon: false
+tag_icon: true
 
 # Reward (Donate)
 # Front-matter variable (unsupport animation).
@@ -1041,6 +1041,4 @@ css: css
 js: js
 images: images
 
-# 添加版权
-passage_end_tag:
-  enabled: true
+
