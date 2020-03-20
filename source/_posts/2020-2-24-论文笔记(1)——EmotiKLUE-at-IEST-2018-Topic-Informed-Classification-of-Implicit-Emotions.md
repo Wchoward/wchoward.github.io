@@ -3,6 +3,7 @@ title: >-
   论文笔记(1)——EmotiKLUE at IEST 2018: Topic-Informed Classification of Implicit
   Emotions
 date: 2020-02-24 21:06:14
+description: EmotiKLUE at IEST 2018, Topic-Informed Classification of Implicit Emotions
 tags:
 	- Implicit Emotions
 categories:
@@ -21,7 +22,7 @@ categories:
 
 * ##### [1 Abstract](#1)
 
-* #####[2 Introduction](#2)
+* ##### [2 Introduction](#2)
 
 * ##### [3 System Desciption](#3)
 
