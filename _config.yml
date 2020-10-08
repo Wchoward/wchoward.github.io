@@ -98,7 +98,7 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: https://github.com/Wchoward/wchoward.github.io
+  repo: https://github.com/Wchoward/wchoward.github.io
   branch: master
 
 # 自动生成sitemap
