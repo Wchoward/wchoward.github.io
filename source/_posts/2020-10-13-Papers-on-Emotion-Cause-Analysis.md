@@ -14,6 +14,11 @@ categories:
 
 **[1]**. **Emotion Cause Events: Corpus Construction and Analysis** *S. Yat, M. Lee, Y. Chen. LREC 2010* [[pdf](https://www.researchgate.net/profile/Chu-Ren_Huang/publication/220746716_Emotion_Cause_Events_Corpus_Construction_and_Analysis/links/0912f508ff080541ac000000/Emotion-Cause-Events-Corpus-Construction-and-Analysis.pdf)]
 
+> 提出了：
+>
+> - Verbal event  V.S. Nominal Event
+> - Linguistic cues
+
 **[2]**. **Overview of NTCIR-13 ECA Task.** *Q Gao, J Hu, R Xu. NTCIR 2013* [[pdf](http://research.nii.ac.jp/ntcir/workshop/OnlineProceedings13/pdf/ntcir/01-NTCIR13-OV-ECA-GaoQ.pdf)]
 
 **[3]**. **Text-based Emotion Classification Using Emotion Cause Extraction** *W Li, H Xu. Expert Systems with Applications 2014.* [[pdf](http://research.nii.ac.jp/ntcir/workshop/OnlineProceedings13/pdf/ntcir/01-NTCIR13-OV-ECA-GaoQ.pdf)]
