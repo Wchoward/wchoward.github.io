@@ -50,6 +50,8 @@ categories:
 
 **[2]**. **From Independent Prediction to Reordered Prediction: Integrating Relative Position and Global Label Information to Emotion Cause Identification** *Z Ding, H He, M Zhang, R Xia. AAAI 2019.* [[pdf](https://www.aaai.org/Papers/AAAI/2019/AAAI-DingZ.5630.pdf)]
 
+**[3]**. **Effective Inter-Clause Modeling for End-to-End Emotion-Cause Pair Extraction** *P Wei, J Zhao, W Mao. ACL 2020.* [[pdf](https://www.aclweb.org/anthology/2020.acl-main.289.pdf)] [[code](https://github.com/Determined22/Rank-Emotion-Cause)]
+
 ### Memory Network
 
 **[1]**. **A Question Answering Approach to Emotion Cause Extraction.** *L Gui, J Hu, Y He, R Xu, Q Lu, J Du. EMNLP 2017.* [[pdf](https://arxiv.org/pdf/1708.05482.pdf)]
@@ -57,6 +59,12 @@ categories:
 ### Joint Learning
 
 **[1]**. **Joint Learning for Emotion Classification and Emotion Cause Detection** *Y Chen, W Hou, X Cheng, S Li. EMNLP 2018.*[[pdf](http://www.aclweb.org/anthology/D18-1066)]
+
+**[2]**. **ECPE-2D:** **Emotion-Cause Pair Extraction based on Joint Two-Dimensional Representation, Interaction and Prediction** *Z Ding, R Xia, J Xu. ACL 2020* [[pdf](https://www.aclweb.org/anthology/2020.acl-main.288.pdf)] [[code](https://github.com/NUSTM/ECPE-2D)]
+
+**[3]**. **Emotion-Cause Joint Detection: A Unified Network with Dual Interaction for Emotion Cause Analysis** *G Hu, G Lu, Y Zhao. NLPCC 2020* [[pdf](https://link.springer.com/chapter/10.1007%2F978-3-030-60450-9_45)] [[code](https://github.com/LeMei/ecjd)] 
+
+**[4]**. **An End-to-End Multi-task Learning Network with Scope Controller for Emotion-Cause Pair Extraction** *R Fan, Y Wang, T He. NLPCC 2020* [[pdf](https://doi.org/10.1007/978-3-030-60450-9_ 60)]
 
 ### Hierarchical Network
 
@@ -69,3 +77,12 @@ categories:
 **[1]**. **A Co-Attention Neural Network Model for Emotion Cause Analysis with Emotional Context Awareness** *X Li, K Song, S Feng, D Wang, Y Zhang. EMNLP 2018* [[pdf](https://www.aclweb.org/anthology/D18-1506)]
 
 **[2]**. **Context-aware Emotion Cause Analysis With Multi-attention-based Neural Network** *X Li, S Feng, D Wang, Y Zhang. KBS 2019, 174: 205-218* [[pdf](https://www.sciencedirect.com/science/article/pii/S0950705119301273/pdfft?md5=49f8a9a3a326733d5441e82c1871fcb0&pid=1-s2.0-S0950705119301273-main.pdf)]
+
+**[3]**. **Transition-based Directed Graph Construction for Emotion-Cause Pair Extraction.** *C Fan, C Yuan, J Du, L Gui, M Yang, R Xu. ACL 2020* [[pdf](https://www.aclweb.org/anthology/2020.acl-main.342.pdf)] [[code](https://github.com/HLT-HITSZ/TransECPE)]
+
+
+
+568
+
+
+
