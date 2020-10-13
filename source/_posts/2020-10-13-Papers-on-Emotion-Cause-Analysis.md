@@ -64,7 +64,7 @@ categories:
 
 **[3]**. **Emotion-Cause Joint Detection: A Unified Network with Dual Interaction for Emotion Cause Analysis** *G Hu, G Lu, Y Zhao. NLPCC 2020* [[pdf](https://link.springer.com/chapter/10.1007%2F978-3-030-60450-9_45)] [[code](https://github.com/LeMei/ecjd)] 
 
-**[4]**. **An End-to-End Multi-task Learning Network with Scope Controller for Emotion-Cause Pair Extraction** *R Fan, Y Wang, T He. NLPCC 2020* [[pdf](https://doi.org/10.1007/978-3-030-60450-9_ 60)]
+**[4]**. **An End-to-End Multi-task Learning Network with Scope Controller for Emotion-Cause Pair Extraction** *R Fan, Y Wang, T He. NLPCC 2020* [[pdf](https://doi.org/10.1007/978-3-030-60450-9_ 60)] 
 
 ### Hierarchical Network
 
