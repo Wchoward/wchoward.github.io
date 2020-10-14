@@ -184,6 +184,7 @@ social:
   GitHub: https://github.com/Wchoward || github
   Email: mailto:3220190893@bit.edu.cn || envelope
   Weibo: https://weibo.com/u/6690248921 || weibo
+  BiliBili: https://space.bilibili.com/101343694 || youtube
   #Google: https://plus.google.com/yourname || google
   #Twitter: https://twitter.com/yourname || twitter
   #FB Page: https://www.facebook.com/yourname || facebook
@@ -206,6 +207,7 @@ links_settings:
 
 links:
   情侣用LeetCode仓库: https://github.com/PluckySaltyfish/WCH_IS_DEAD
+  大数据职位招聘挖掘: https://github.com/PluckySaltyfish/DM-Hiring-Information
 
 # Table of Contents in the Sidebar
 # Front-matter variable (unsupport wrap expand_all).
