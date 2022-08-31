@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://wchoward.github.io').hostname,
+    root: '/',
+    scheme: 'Mist',
+    version: '7.7.1',
+    exturl: false,
+    sidebar: {"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="Docker安装与运行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2022-08-31-Docker从入门到放弃(1)">
+<meta property="og:url" content="https://wchoward.github.io/2022/08/31/2022-08-31-Docker%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-1/index.html">
+<meta property="og:site_name" content="Wchoward">
+<meta property="og:description" content="Docker安装与运行">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-31T05:28:37.000Z">
+<meta property="article:modified_time" content="2022-08-31T07:00:51.425Z">
+<meta property="article:author" content="Howard WU">
+<meta property="article:tag" content="Docker">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://wchoward.github.io/2022/08/31/2022-08-31-Docker%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>2022-08-31-Docker从入门到放弃(1) | Wchoward</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wchoward</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wchoward.github.io/2022/08/31/2022-08-31-Docker%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/assets/header.jpg">
+      <meta itemprop="name" content="Howard WU">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wchoward">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2022-08-31-Docker从入门到放弃(1)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-08-31 13:28:37 / 修改时间：15:00:51" itemprop="dateCreated datePublished" datetime="2022-08-31T13:28:37+08:00">2022-08-31</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Development/" itemprop="url" rel="index">
+                    <span itemprop="name">Development</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">Docker安装与运行</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="docker安装"><a class="markdownIt-Anchor" href="#docker安装"></a> Docker安装</h1>
+<h2 id="centos安装"><a class="markdownIt-Anchor" href="#centos安装"></a> CentOS安装</h2>
+<h3 id="卸载旧版本"><a class="markdownIt-Anchor" href="#卸载旧版本"></a> 卸载旧版本</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo yum remove docker \</span></span><br><span class="line"><span class="bash">                  docker-client \</span></span><br><span class="line"><span class="bash">                  docker-client-latest \</span></span><br><span class="line"><span class="bash">                  docker-common \</span></span><br><span class="line"><span class="bash">                  docker-latest \</span></span><br><span class="line"><span class="bash">                  docker-latest-logrotate \</span></span><br><span class="line"><span class="bash">                  docker-logrotate \</span></span><br><span class="line"><span class="bash">                  docker-engine</span></span><br></pre></td></tr></table></figure>
+<h3 id="安装方法"><a class="markdownIt-Anchor" href="#安装方法"></a> 安装方法</h3>
+<h4 id="设置repository"><a class="markdownIt-Anchor" href="#设置repository"></a> 设置repository</h4>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo yum install -y yum-utils</span></span><br></pre></td></tr></table></figure>
+<h4 id="安装docker-engine"><a class="markdownIt-Anchor" href="#安装docker-engine"></a> 安装Docker Engine</h4>
+<ul>
+<li>
+<p>安装最新版Docker Engine, containerd, Docker Compose</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo yum install docker-ce docker-ce-cli containerd.io docker-compose-plugin</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>安装特定版本Docker Engine</p>
+<ol>
+<li>
+<p>显示仓库内所有可用版本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> yum list docker-ce --showduplicates | sort -r</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>安装指定版本</p>
+<p>e.g. <code>docker-ce-18.09.1</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo yum install docker-ce-&lt;VERSION_STRING&gt; docker-ce-cli-&lt;VERSION_STRING&gt; containerd.io docker-compose-plugin</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li>
+<p>启动Docker服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo systemctl start docker</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="debianubuntu安装"><a class="markdownIt-Anchor" href="#debianubuntu安装"></a> Debian/Ubuntu安装</h2>
+<h3 id="卸载旧版本-2"><a class="markdownIt-Anchor" href="#卸载旧版本-2"></a> 卸载旧版本</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get remove docker docker-engine docker.io containerd runc</span></span><br></pre></td></tr></table></figure>
+<h3 id="安装方法-2"><a class="markdownIt-Anchor" href="#安装方法-2"></a> 安装方法</h3>
+<h4 id="设置repository-2"><a class="markdownIt-Anchor" href="#设置repository-2"></a> 设置repository</h4>
+<ol>
+<li>
+<p>更新<code>apt</code>包索引，安装packages允许<code>apt</code>通过HTTPS使用repository</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo sudo apt-get update</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install \</span></span><br><span class="line"><span class="bash">				ca-certificates \</span></span><br><span class="line"><span class="bash">				curl \</span></span><br><span class="line"><span class="bash">				gnupg \</span></span><br><span class="line"><span class="bash">				lsb-release</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>添加Docker官方GPG key</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo mkdir -p /etc/apt/keyrings</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Debian</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Ubuntu</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>设置repository</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Debian</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> \</span></span><br><span class="line"><span class="bash">  <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \</span></span></span><br><span class="line"><span class="bash">  $(lsb_release -cs) stable<span class="string">&quot; | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Ubuntu</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> \</span></span><br><span class="line"><span class="bash">  <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \</span></span></span><br><span class="line"><span class="bash">  $(lsb_release -cs) stable<span class="string">&quot; | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null</span></span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="安装docker-engine-2"><a class="markdownIt-Anchor" href="#安装docker-engine-2"></a> 安装Docker Engine</h4>
+<ul>
+<li>
+<p>安装最新版Docker Engine, containerd, Docker Compose</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get update</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>安装特定版本Docker Engine</p>
+<ol>
+<li>
+<p>显示仓库内所有可用版本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> apt-cache madison docker-ce</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>安装指定版本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install docker-ce=&lt;VERSION_STRING&gt; docker-ce-cli=&lt;VERSION_STRING&gt; containerd.io docker-compose-plugin</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li>
+<p>启动Docker服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo service docker start</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="docker-运行"><a class="markdownIt-Anchor" href="#docker-运行"></a> Docker 运行</h1>
+<h2 id="images"><a class="markdownIt-Anchor" href="#images"></a> Images</h2>
+<ol>
+<li>
+<p>拉取镜像</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker pull python</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker pull python:latest</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker pull python:3.10-alpine</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>List镜像</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker images</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>删除镜像</p>
+<p>若一个image存在多个tag，需要先删除所有<code>image:tag</code>，再删除image</p>
+<p>或采用<code>-f</code>强制一次性删除IMAGE ID</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 逐tag删除</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rmi python:v1</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rmi python:v2</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rmi python:latest</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 强制一次性删除</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rmi -f ce4168535f30</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="containers"><a class="markdownIt-Anchor" href="#containers"></a> Containers</h2>
+<ol>
+<li>根据image创建container</li>
+<li>List所有container</li>
+<li>删除container</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Howard WU
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://wchoward.github.io/2022/08/31/2022-08-31-Docker%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-1/" title="2022-08-31-Docker从入门到放弃(1)">https://wchoward.github.io/2022/08/31/2022-08-31-Docker从入门到放弃-1/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+      
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Docker/" rel="tag"><i class="fa fa-star"></i> Docker</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/21/2022-04-21-hexo%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8/" rel="prev" title="2022-04-21-hexo博客使用">
+      <i class="fa fa-chevron-left"></i> 2022-04-21-hexo博客使用
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#docker%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text"> Docker安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#centos%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text"> CentOS安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%B8%E8%BD%BD%E6%97%A7%E7%89%88%E6%9C%AC"><span class="nav-number">1.1.1.</span> <span class="nav-text"> 卸载旧版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.2.</span> <span class="nav-text"> 安装方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AErepository"><span class="nav-number">1.1.2.1.</span> <span class="nav-text"> 设置repository</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85docker-engine"><span class="nav-number">1.1.2.2.</span> <span class="nav-text"> 安装Docker Engine</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#debianubuntu%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.</span> <span class="nav-text"> Debian&#x2F;Ubuntu安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%B8%E8%BD%BD%E6%97%A7%E7%89%88%E6%9C%AC-2"><span class="nav-number">1.2.1.</span> <span class="nav-text"> 卸载旧版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%96%B9%E6%B3%95-2"><span class="nav-number">1.2.2.</span> <span class="nav-text"> 安装方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AErepository-2"><span class="nav-number">1.2.2.1.</span> <span class="nav-text"> 设置repository</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85docker-engine-2"><span class="nav-number">1.2.2.2.</span> <span class="nav-text"> 安装Docker Engine</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#docker-%E8%BF%90%E8%A1%8C"><span class="nav-number">2.</span> <span class="nav-text"> Docker 运行</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#images"><span class="nav-number">2.1.</span> <span class="nav-text"> Images</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#containers"><span class="nav-number">2.2.</span> <span class="nav-text"> Containers</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Howard WU"
+      src="/assets/header.jpg">
+  <p class="site-author-name" itemprop="name">Howard WU</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Wchoward" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Wchoward" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:3220190893@bit.edu.cn" title="Email → mailto:3220190893@bit.edu.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>Email</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/6690248921" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;6690248921" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/101343694" title="BiliBili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;101343694" rel="noopener" target="_blank"><i class="fa fa-fw fa-youtube"></i>BiliBili</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      我的项目
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/PluckySaltyfish/WCH_IS_DEAD" title="https:&#x2F;&#x2F;github.com&#x2F;PluckySaltyfish&#x2F;WCH_IS_DEAD" rel="noopener" target="_blank">情侣用LeetCode仓库</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/PluckySaltyfish/DM-Hiring-Information" title="https:&#x2F;&#x2F;github.com&#x2F;PluckySaltyfish&#x2F;DM-Hiring-Information" rel="noopener" target="_blank">大数据职位招聘挖掘</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-star"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Howard WU</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
