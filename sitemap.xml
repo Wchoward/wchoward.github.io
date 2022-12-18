@@ -109,13 +109,6 @@
 
   
   <url>
-    <loc>https://wchoward.github.io/tags/Emotion-Cause/</loc>
-    <lastmod>2022-12-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://wchoward.github.io/tags/Linux/</loc>
     <lastmod>2022-12-18</lastmod>
     <changefreq>daily</changefreq>
@@ -124,6 +117,13 @@
   
   <url>
     <loc>https://wchoward.github.io/tags/Shell/</loc>
+    <lastmod>2022-12-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://wchoward.github.io/tags/Emotion-Cause/</loc>
     <lastmod>2022-12-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -216,14 +216,14 @@
 
   
   <url>
-    <loc>https://wchoward.github.io/categories/Papers/</loc>
+    <loc>https://wchoward.github.io/categories/Linux/</loc>
     <lastmod>2022-12-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://wchoward.github.io/categories/Linux/</loc>
+    <loc>https://wchoward.github.io/categories/Papers/</loc>
     <lastmod>2022-12-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
