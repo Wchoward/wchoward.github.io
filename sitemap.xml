@@ -193,13 +193,6 @@
   </url>
   
   <url>
-    <loc>https://wchoward.github.io/tags/Docker/</loc>
-    <lastmod>2022-12-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://wchoward.github.io/tags/disk/</loc>
     <lastmod>2022-12-18</lastmod>
     <changefreq>daily</changefreq>
@@ -208,6 +201,13 @@
   
   <url>
     <loc>https://wchoward.github.io/tags/%E7%BD%91%E7%BB%9C-etcd-soft-lockup/</loc>
+    <lastmod>2022-12-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://wchoward.github.io/tags/Docker/</loc>
     <lastmod>2022-12-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -251,13 +251,6 @@
   </url>
   
   <url>
-    <loc>https://wchoward.github.io/categories/Development/</loc>
-    <lastmod>2022-12-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://wchoward.github.io/categories/IaaS/</loc>
     <lastmod>2022-12-18</lastmod>
     <changefreq>daily</changefreq>
@@ -266,6 +259,13 @@
   
   <url>
     <loc>https://wchoward.github.io/categories/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E4%B8%8E%E8%A7%A3%E5%86%B3/</loc>
+    <lastmod>2022-12-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://wchoward.github.io/categories/Development/</loc>
     <lastmod>2022-12-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
