@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Linux常用操作</title>
+    <url>/2020/10/08/2020-10-08-Linux%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<h3 id="gpu相关"><a class="markdownIt-Anchor" href="#gpu相关"></a> GPU相关</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># check gpu status</span></span><br><span class="line">$ nvidia-smi</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">$ gpustat</span><br><span class="line"></span><br><span class="line"><span class="comment"># set gpu visible</span></span><br><span class="line">$ <span class="built_in">export</span> CUDA_VISIBLE_DEVICES=5</span><br></pre></td></tr></table></figure>
+<h3 id="输出重定向"><a class="markdownIt-Anchor" href="#输出重定向"></a> 输出重定向</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">command</span> &amp;&gt; myout.log</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">$ comman &gt; myout.log 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<h3 id="后台运行进程"><a class="markdownIt-Anchor" href="#后台运行进程"></a> 后台运行进程</h3>
+<h4 id="screen"><a class="markdownIt-Anchor" href="#screen"></a> Screen</h4>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ screen -S <span class="built_in">test</span></span><br><span class="line">$ screen -r <span class="built_in">test</span></span><br><span class="line">$ screen -X -S <span class="built_in">test</span> quit</span><br></pre></td></tr></table></figure>
+<h4 id="nohup"><a class="markdownIt-Anchor" href="#nohup"></a> Nohup</h4>
+<ol>
+<li>创建进程</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建进程</span></span><br><span class="line">$ nohup <span class="built_in">command</span> &gt; myout.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>查看进程</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看进程</span></span><br><span class="line">$ <span class="built_in">jobs</span></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">$ ps -aux | grep <span class="built_in">command</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>关闭进程</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># jobs 查看jobnum</span></span><br><span class="line">$ <span class="built_in">kill</span> %jobnum</span><br><span class="line"><span class="comment"># ps查看进程号PID</span></span><br><span class="line">$ <span class="built_in">kill</span> %PID</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>进程前后台切换</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 后台调至前台</span></span><br><span class="line">$ <span class="built_in">fg</span> %jobnum</span><br><span class="line"><span class="comment"># 前台放到后台，并处于暂停状态</span></span><br><span class="line">$ Ctrl + z</span><br><span class="line"><span class="comment"># 后台暂停状态变执行</span></span><br><span class="line">$ <span class="built_in">bg</span> %jobnum</span><br></pre></td></tr></table></figure>
+<h3 id="查看磁盘使用情况"><a class="markdownIt-Anchor" href="#查看磁盘使用情况"></a> 查看磁盘使用情况</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 整体磁盘空间</span></span><br><span class="line">$ df -lh</span><br><span class="line"><span class="comment"># 当前目录下使用空间</span></span><br><span class="line">$ du --max-depth=1 -h</span><br></pre></td></tr></table></figure>
+<h4 id><a class="markdownIt-Anchor" href="#"></a> </h4>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2020-10-13-Papers-on-Emotion-Cause-Analysis</title>
+    <url>/2020/10/13/2020-10-13-Papers-on-Emotion-Cause-Analysis/</url>
+    <content><![CDATA[<h1 id="papers-on-emotion-cause-analysis"><a class="markdownIt-Anchor" href="#papers-on-emotion-cause-analysis"></a> Papers on Emotion Cause Analysis</h1>
+<h2 id="task-dataset"><a class="markdownIt-Anchor" href="#task-dataset"></a> Task &amp; Dataset</h2>
+<p><strong>[1]</strong>. <strong>Emotion Cause Events: Corpus Construction and Analysis</strong> <em>S. Yat, M. Lee, Y. Chen. LREC 2010</em> [<a href="https://www.researchgate.net/profile/Chu-Ren_Huang/publication/220746716_Emotion_Cause_Events_Corpus_Construction_and_Analysis/links/0912f508ff080541ac000000/Emotion-Cause-Events-Corpus-Construction-and-Analysis.pdf">pdf</a>]</p>
+<blockquote>
+<p>提出了：</p>
+<ul>
+<li>Verbal event  V.S. Nominal Event</li>
+<li>Linguistic cues</li>
+</ul>
+</blockquote>
+<p><strong>[2]</strong>. <strong>Overview of NTCIR-13 ECA Task.</strong> <em>Q Gao, J Hu, R Xu. NTCIR 2013</em> [<a href="http://research.nii.ac.jp/ntcir/workshop/OnlineProceedings13/pdf/ntcir/01-NTCIR13-OV-ECA-GaoQ.pdf">pdf</a>]</p>
+<p><strong>[3]</strong>. <strong>Text-based Emotion Classification Using Emotion Cause Extraction</strong> <em>W Li, H Xu. Expert Systems with Applications 2014.</em> [<a href="http://research.nii.ac.jp/ntcir/workshop/OnlineProceedings13/pdf/ntcir/01-NTCIR13-OV-ECA-GaoQ.pdf">pdf</a>]</p>
+<p><strong>[4]</strong>. <strong>Emotion Cause Extraction, A Challenging Task with Corpus Construction</strong> <em>L Gui, R Xu, Q Lu, D Wu, Y Zhou. SMP 2016.</em> [<a href="https://link.springer.com/content/pdf/10.1007%2F978-981-10-2993-6.pdf">pdf</a>] [<a href="http://hlt.hitsz.edu.cn/?page_id=74">data</a>]</p>
+<p><strong>[5]</strong>. <strong>An Emotion Cause Corpus for Chinese Microblogs with Multiple-User Structures</strong> <em>X Cheng, Y Chen, B Cheng, S Li, G Zhou. ACM TALLIP 2017.</em> [<a href="http://delivery.acm.org/10.1145/3140000/3132684/a6-cheng.pdf?ip=58.60.1.21&amp;id=3132684&amp;acc=ACTIVE%20SERVICE&amp;key=BF85BBA5741FDC6E%2E0871A888CCEFF346%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&amp;__acm__=1552353230_cf8d45228c04b6b44298acd5cec733e9">pdf</a>]</p>
+<p><strong>[6]</strong>. <strong>Who Feels What and Why? Annotation of a Literature Corpus with Semantic Roles of Emotions</strong> <em>E Kim, R Klinger. COLING 2018.</em> [<a href="https://www.aclweb.org/anthology/C18-1114">pdf</a>] [<a href="https://www.ims.uni-stuttgart.de/forschung/ressourcen/korpora/reman.html">data</a>]</p>
+<p><strong>[7]</strong>. <strong>Emotion-Cause Pair Extraction: A New Task to Emotion Analysis in Texts</strong> <em>R Xia, Z Ding. ACL 2019.</em> [<a href="https://arxiv.org/pdf/1906.01267.pdf">pdf</a>] [<a href="https://github.com/NUSTM/ECPE/tree/master/data_combine">data</a>] [<a href="https://github.com/NUSTM/ECPE">code</a>]</p>
+<h2 id="rule-based-methods"><a class="markdownIt-Anchor" href="#rule-based-methods"></a> Rule-based Methods</h2>
+<p><strong>[1]</strong>. <strong>A Text-driven Rule-based System for Emotion Cause Detection.</strong> <em>S Lee, Y Chen, C Huang. NAACL  2010.</em> [<a href="http://www.aclweb.org/anthology/W10-0206">pdf</a>]</p>
+<blockquote>
+<p>This paper proposed 1.a Chinese EC annotated corpus; 2.a rule-based system for automatic detection of EC; <a href="http://3.an">3.an</a> evaluation scheme for performance sessment.</p>
+</blockquote>
+<p><strong>[2]</strong>. <strong>A Linguistic Approach to Emotion Detection and Classification.</strong> <em>SYM Lee. Ph.D. dissertation. PolyU 2010.</em> [<a href="http://ira.lib.polyu.edu.hk/handle/10397/6369">pdf</a>]</p>
+<p><strong>[3]</strong>. <strong>Emotion Cause Detection with Linguistic Constructions.</strong> <em>Y Chen, S Lee, S Li, C Huang. Coling 2010.</em> [<a href="http://lexitron.nectec.or.th/public/COLING-2010_Beijing_China/PAPERS/pdf/PAPERS021.pdf">pdf</a>]</p>
+<p><strong>[4]</strong>. <strong>Emotion Cause Detection with Linguistic Construction in Chinese Weibo Text.</strong> <em>L Gui, L Yuan, R Xu, B Liu, Q Lu, Y Zhou. NLPCC 2014.</em> [<a href="https://www.researchgate.net/profile/Ruifeng_Xu2/publication/289764554_Emotion_Cause_Detection_with_Linguistic_Construction_in_Chinese_Weibo_Text/links/5825eb3308aeebc4f8a1e0b2/Emotion-Cause-Detection-with-Linguistic-Construction-in-Chinese-Weibo-Text.pdf">pdf</a>]</p>
+<p><strong>[5]</strong>. <strong>A Rule-based Approach to Emotion Cause Detection for Chinese Micro-blogs.</strong> <em>K Gao, H Xu, J Wang. Expert System with Applications. 2015.</em> [<a href="https://www.sciencedirect.com/science/article/pii/S0957417415000871/pdfft?md5=9b9f75c264398738d88f25bb9f0c4f34&amp;pid=1-s2.0-S0957417415000871-main.pdf">pdf</a>]</p>
+<p><strong>[6]</strong>. <strong>Event-Driven Emotion Cause Extraction with Corpus Construction.</strong> <em>L Gui, D Wu, R Xu, Q Lu, Y Zhou. EMNLP 2016.</em> [<a href="http://www.aclweb.org/anthology/D16-1170">pdf</a>]</p>
+<h2 id="deep-learning-based-methods"><a class="markdownIt-Anchor" href="#deep-learning-based-methods"></a> Deep learning-based Methods</h2>
+<h3 id="reranking"><a class="markdownIt-Anchor" href="#reranking"></a> Reranking</h3>
+<p><strong>[1]</strong>. <strong>Extracting Emotion Causes using Learning to Rank Methods from an Information Retrieval Perspective</strong> <em>B Xu, H Lin, Y Lin, Y Diao, L Yang, K Xu. IEEE ACCESS 2019.</em> [<a href="https://ieeexplore.ieee.org/ielx7/6287639/8600701/08625499.pdf?tp=&amp;arnumber=8625499&amp;isnumber=8600701">pdf</a>]</p>
+<p><strong>[2]</strong>. <strong>From Independent Prediction to Reordered Prediction: Integrating Relative Position and Global Label Information to Emotion Cause Identification</strong> <em>Z Ding, H He, M Zhang, R Xia. AAAI 2019.</em> [<a href="https://www.aaai.org/Papers/AAAI/2019/AAAI-DingZ.5630.pdf">pdf</a>]</p>
+<p><strong>[3]</strong>. <strong>Effective Inter-Clause Modeling for End-to-End Emotion-Cause Pair Extraction</strong> <em>P Wei, J Zhao, W Mao. ACL 2020.</em> [<a href="https://www.aclweb.org/anthology/2020.acl-main.289.pdf">pdf</a>] [<a href="https://github.com/Determined22/Rank-Emotion-Cause">code</a>]</p>
+<h3 id="memory-network"><a class="markdownIt-Anchor" href="#memory-network"></a> Memory Network</h3>
+<p><strong>[1]</strong>. <strong>A Question Answering Approach to Emotion Cause Extraction.</strong> <em>L Gui, J Hu, Y He, R Xu, Q Lu, J Du. EMNLP 2017.</em> [<a href="https://arxiv.org/pdf/1708.05482.pdf">pdf</a>]</p>
+<h3 id="joint-learning"><a class="markdownIt-Anchor" href="#joint-learning"></a> Joint Learning</h3>
+<p><strong>[1]</strong>. <strong>Joint Learning for Emotion Classification and Emotion Cause Detection</strong> <em>Y Chen, W Hou, X Cheng, S Li. EMNLP 2018.</em>[<a href="http://www.aclweb.org/anthology/D18-1066">pdf</a>]</p>
+<p><strong>[2]</strong>. <strong>ECPE-2D:</strong> <strong>Emotion-Cause Pair Extraction based on Joint Two-Dimensional Representation, Interaction and Prediction</strong> <em>Z Ding, R Xia, J Xu. ACL 2020</em> [<a href="https://www.aclweb.org/anthology/2020.acl-main.288.pdf">pdf</a>] [<a href="https://github.com/NUSTM/ECPE-2D">code</a>]</p>
+<p><strong>[3]</strong>. <strong>Emotion-Cause Joint Detection: A Unified Network with Dual Interaction for Emotion Cause Analysis</strong> <em>G Hu, G Lu, Y Zhao. NLPCC 2020</em> [<a href="https://link.springer.com/chapter/10.1007%2F978-3-030-60450-9_45">pdf</a>] [<a href="https://github.com/LeMei/ecjd">code</a>]</p>
+<p><strong>[4]</strong>. <strong>An End-to-End Multi-task Learning Network with Scope Controller for Emotion-Cause Pair Extraction</strong> <em>R Fan, Y Wang, T He. NLPCC 2020</em> [[pdf](<a href="https://doi.org/10.1007/978-3-030-60450-9_">https://doi.org/10.1007/978-3-030-60450-9_</a> 60)]</p>
+<h3 id="hierarchical-network"><a class="markdownIt-Anchor" href="#hierarchical-network"></a> Hierarchical Network</h3>
+<p><strong>[1]</strong>. <strong>Multiple Level Hierarchical Network Based Clause Selection for Emotion Cause Extraction</strong> <em>X Yu, W Rong, Z Zhang, Y Ouyang, Z Xiong. IEEE ACCESS 2019.</em> [<a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=8598785">pdf</a>] [<a href="https://github.com/deardelia/ECextraction">code</a>]</p>
+<p><strong>[2]</strong>. <strong>RTHN: A RNN-Transformer Hierarchical Network for Emotion Cause Extraction</strong> <em>R Xia, M Zhang, Z Ding. IJCAI 2019.</em> [<a href="https://arxiv.org/pdf/1906.01236.pdf">pdf</a>] [<a href="https://github.com/NUSTM/RTHN">code</a>]</p>
+<h3 id="others"><a class="markdownIt-Anchor" href="#others"></a> Others</h3>
+<p><strong>[1]</strong>. <strong>A Co-Attention Neural Network Model for Emotion Cause Analysis with Emotional Context Awareness</strong> <em>X Li, K Song, S Feng, D Wang, Y Zhang. EMNLP 2018</em> [<a href="https://www.aclweb.org/anthology/D18-1506">pdf</a>]</p>
+<p><strong>[2]</strong>. <strong>Context-aware Emotion Cause Analysis With Multi-attention-based Neural Network</strong> <em>X Li, S Feng, D Wang, Y Zhang. KBS 2019, 174: 205-218</em> [<a href="https://www.sciencedirect.com/science/article/pii/S0950705119301273/pdfft?md5=49f8a9a3a326733d5441e82c1871fcb0&amp;pid=1-s2.0-S0950705119301273-main.pdf">pdf</a>]</p>
+<p><strong>[3]</strong>. <strong>Transition-based Directed Graph Construction for Emotion-Cause Pair Extraction.</strong> <em>C Fan, C Yuan, J Du, L Gui, M Yang, R Xu. ACL 2020</em> [<a href="https://www.aclweb.org/anthology/2020.acl-main.342.pdf">pdf</a>] [<a href="https://github.com/HLT-HITSZ/TransECPE">code</a>]</p>
+]]></content>
+      <categories>
+        <category>Papers</category>
+      </categories>
+      <tags>
+        <tag>Emotion Cause</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2020-10-18-C++位运算</title>
+    <url>/2020/10/18/2020-10-18-C++%E4%BD%8D%E8%BF%90%E7%AE%97/</url>
+    <content><![CDATA[<blockquote>
+<p>转载自还没有发表这一篇博客的<a href="http://pluckytyx.top">tyx</a></p>
+</blockquote>
+<h4 id="用c位运算表示下列二进制数"><a class="markdownIt-Anchor" href="#用c位运算表示下列二进制数"></a> 用C++位运算表示下列二进制数</h4>
+<ul>
+<li>
+<p>n乘2</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">n &lt;&lt; <span class="number">1</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>n除2</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">n &gt;&gt; <span class="number">1</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>n和m中均为1的位</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">n &amp; m</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>n或m中为1的位</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">n | m</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>n或m中为0的位</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">~(n &amp; m)</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>n和m中为0的位</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">~(n | m)</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>第n位为1</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span> &lt;&lt; n</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>n位均为1</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span> &lt;&lt; (n + <span class="number">1</span>) - <span class="number">1</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>m位均为1，一共n位(n&gt;m,左方补0)</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">(<span class="number">1</span> &lt;&lt; (n + <span class="number">1</span>) - <span class="number">1</span>) &amp; (<span class="number">1</span> &lt;&lt; (m + <span class="number">1</span>) - <span class="number">1</span>) </span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>取出n的最后一位1</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">n &amp; (-n)</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>将n的最后一位1变成0</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">n &amp; (n - <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>将n的第m位变成1</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">n | (<span class="number">1</span> &lt;&lt; m)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>位运算</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>论文笔记(1)——EmotiKLUE at IEST 2018: Topic-Informed Classification of Implicit Emotions</title>
+    <url>/2020/02/24/2020-2-24-%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0(1)%E2%80%94%E2%80%94EmotiKLUE-at-IEST-2018-Topic-Informed-Classification-of-Implicit-Emotions/</url>
+    <content><![CDATA[<h4 id="论文信息"><a class="markdownIt-Anchor" href="#论文信息"></a> 论文信息</h4>
+<blockquote>
+<p>提名: EmotiKLUE at IEST 2018: Topic-Informed Classification of Implicit Emotions</p>
+<p>来源: WASSA@EMNLP</p>
+<p>年份: 2018</p>
+</blockquote>
+<ul>
+<li>
+<h5 id="1-abstract"><a class="markdownIt-Anchor" href="#1-abstract"></a> <a href="#1">1 Abstract</a></h5>
+</li>
+<li>
+<h5 id="2-introduction"><a class="markdownIt-Anchor" href="#2-introduction"></a> <a href="#2">2 Introduction</a></h5>
+</li>
+<li>
+<h5 id="3-system-desciption"><a class="markdownIt-Anchor" href="#3-system-desciption"></a> <a href="#3">3 System Desciption</a></h5>
+</li>
+<li>
+<h5 id="4-experiments"><a class="markdownIt-Anchor" href="#4-experiments"></a> <a href="#4">4 Experiments</a></h5>
+</li>
+<li>
+<h5 id="5-conclutions"><a class="markdownIt-Anchor" href="#5-conclutions"></a> <a href="#5">5 Conclutions</a></h5>
+</li>
+</ul>
+<hr>
+<br>
+<h4 id="1">Abstract</h4>
+<br>
+<h4 id="2">Introduction</h4>
+<br>
+<h4 id="3">System Description</h4>
+<br>
+<h4 id="4">Experiments</h4>
+<br>
+<h4 id="5">Conclutions</h4>
+]]></content>
+      <categories>
+        <category>论文笔记</category>
+      </categories>
+      <tags>
+        <tag>Implicit Emotions</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2021-01-12-BERT(1)_Tokenizer</title>
+    <url>/2021/01/12/2021-01-12-BERT-1-Tokenizer/</url>
+    <content><![CDATA[<h1 id="使用"><a class="markdownIt-Anchor" href="#使用"></a> 使用</h1>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> BertTokenizer</span><br><span class="line">self.bert_tokenizer = BertTokenizer.from_pretrained(<span class="string">&#x27;bert_model_path&#x27;</span>)</span><br><span class="line">indexed_tokens = self.bert_tokenizer.encode(example_text.strip(), add_special_tokens=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="encode流程"><a class="markdownIt-Anchor" href="#encode流程"></a> encode流程</h1>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 1. BertTokenizer</span></span><br><span class="line"><span class="comment"># 2. PreTrainedTokenizer.encode</span></span><br><span class="line"><span class="comment"># 3. PreTrainedTokenizer.encode_plus</span></span><br><span class="line"><span class="comment"># 4. PreTrainedTokenizer.prepare_for_model</span></span><br><span class="line"><span class="comment"># 5. BertTokenizer.build_inputs_with_special_tokens (添加[CLS] [SEP])</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>
+<p>获取文本text</p>
+</li>
+<li>
+<p>读取词表vocab</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_vocab</span>(<span class="params">vocab_file</span>):</span></span><br><span class="line">    vocab = collections.OrderedDict()</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(vocab_file, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> reader:</span><br><span class="line">        tokens = reader.readlines()</span><br><span class="line">    <span class="keyword">for</span> index, token <span class="keyword">in</span> <span class="built_in">enumerate</span>(tokens):</span><br><span class="line">        token = token.rstrip(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">        vocab[token] = index</span><br><span class="line">    <span class="keyword">return</span> vocab</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>调用 encode方法 -&gt; encode_plus方法</p>
+</li>
+<li>
+<p>获取输入文本对应的token id （get_input_ids）</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">convert_tokens_to_ids</span>(<span class="params">self, tokens</span>):</span></span><br><span class="line">	ids = []</span><br><span class="line">  <span class="keyword">for</span> token <span class="keyword">in</span> tokens:</span><br><span class="line">  	ids.append(self._convert_token_to_id_with_added_voc(token))</span><br><span class="line">  <span class="keyword">return</span> ids</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_convert_token_to_id_with_added_voc</span>(<span class="params">self, token</span>):</span></span><br><span class="line">	<span class="keyword">if</span> token <span class="keyword">in</span> self.added_tokens_encoder:</span><br><span class="line">		<span class="keyword">return</span> self.added_tokens_encoder[token]</span><br><span class="line">  <span class="keyword">return</span> self._convert_token_to_id(token)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_convert_token_to_id</span>(<span class="params">self, token</span>):</span></span><br><span class="line">	<span class="keyword">return</span> self.vocab.get(token, self.vocab.get(self.unk_token))</span><br></pre></td></tr></table></figure>
+<p>其中对于不在vocab中的词，返回<unk>对应的id</unk></p>
+</li>
+<li>
+<p>调用prepare_for_model方法返回Dictionary</p>
+<ul>
+<li><code>input_ids</code></li>
+<li><code>token_type_ids</code></li>
+<li><code>attention_mask</code></li>
+<li><code>overflowing_tokens</code></li>
+<li><code>num_truncated_tokens</code></li>
+<li><code>special_tokens_mask</code></li>
+</ul>
+</li>
+<li>
+<p>TBD</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Deep Learning</category>
+        <category>NLP</category>
+      </categories>
+      <tags>
+        <tag>Bert</tag>
+        <tag>分词</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2022-04-21-hexo博客使用</title>
+    <url>/2022/04/21/2022-04-21-hexo%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h1 id="写文章步骤"><a class="markdownIt-Anchor" href="#写文章步骤"></a> 写文章步骤</h1>
+<ol>
+<li>确保本地仓库是切换到了hexo分支并pull一下；</li>
+<li>执行<code>hexo n &quot;blog_title&quot;</code>新建文章，可以发现<code>source/_posts/</code>目录多了一个文件夹和一个.md文件，分别用来存放文章图片和文章内容；</li>
+<li>编辑、撰写文章或做其他博客更新改动；</li>
+<li><code>hexo g</code>生成静态网页，然后<code>hexo s</code>本地预览效果，确保没问题后执行<code>hexo d</code>（在此之前可能需要<code>hexo clean</code>清下缓存）部署，会自动将最新静态文件改动更新到master分支了；</li>
+<li>然后将本地hexo分支的改动也更新到git。</li>
+</ol>
+<h1 id="hexo常用命令"><a class="markdownIt-Anchor" href="#hexo常用命令"></a> Hexo常用命令</h1>
+<p>初始相关</p>
+<ul>
+<li><code>npm install hexo -g</code> # 安装Hexo</li>
+<li><code>npm update hexo -g</code> # 升级</li>
+<li><code>hexo init</code> # 初始化博客</li>
+</ul>
+<p>写文章相关</p>
+<ul>
+<li><code>hexo n &quot;blog_title&quot;</code> == <code>hexo new &quot;blog_title&quot;</code> # 新建文章</li>
+<li><code>hexo g</code> == <code>hexo generate</code> # 生成</li>
+<li><code>hexo s</code> == <code>hexo server</code> # 预览</li>
+<li><code>hexo d</code> == <code>hexo deploy</code> # 部署</li>
+<li><code>hexo clean</code> # 清除缓存,若是网页正常情况下可以忽略这条命令</li>
+</ul>
+<h1 id="参考文章"><a class="markdownIt-Anchor" href="#参考文章"></a> 参考文章</h1>
+<p><a href="https://zhuanlan.zhihu.com/p/26625249">GitHub+Hexo 搭建个人网站详细教程</a><br>
+<a href="https://godweiyang.com/2018/04/13/hexo-blog/">超详细Hexo+Github博客搭建小白教程</a><br>
+<a href="https://www.jianshu.com/p/0b1fccce74e0">利用Hexo在多台电脑上提交和更新github pages博客</a><br>
+<a href="https://www.jianshu.com/p/fceaf373d797">hexo博客同步管理及迁移</a><br>
+<a href="https://colobu.com/2014/08/17/MathJax-quick-reference/">Mathjax公式快速参考</a><br>
+<a href="https://fontawesome.com/v4.7.0/icons/">各种图标</a><br>
+<a href="https://blog.csdn.net/qq_32454537/article/details/79482914">Hexo个人博客站点被百度谷歌收录</a><br>
+<a href="https://medium.com/@goelanirudh/add-https-to-your-namecheap-domain-hosted-on-github-pages-d66fd96308b5">Add https to your Namecheap Domain hosted on Github Pages</a><br>
+<a href="https://keung.asia/posts/17051/">hexo 主题优化</a></p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>blog</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2021-01-14-Word2Vec详解</title>
+    <url>/2021/01/14/2021-01-14-Word2Vec%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<h1 id="word2vector-词向量"><a class="markdownIt-Anchor" href="#word2vector-词向量"></a> Word2Vector 词向量</h1>
+<p>word2vec工具主要包含两个模型：</p>
+<ul>
+<li>跳字模型（skip-gram）</li>
+<li>连续词袋模型（continuous bag of words，简称CBOW），</li>
+</ul>
+<p>以及两种高效训练的方法：</p>
+<ul>
+<li>负采样（negative sampling）</li>
+<li>层序softmax（hierarchical softmax）。</li>
+</ul>
+<h2 id="cbow-skip-gram"><a class="markdownIt-Anchor" href="#cbow-skip-gram"></a> CBOW &amp; Skip-Gram</h2>
+<h3 id="cbow"><a class="markdownIt-Anchor" href="#cbow"></a> CBOW</h3>
+<p>输入：n个词向量 context词</p>
+<p>输出：所有词的Softmax概率 （训练的目标是期望训练样本特定词对应的softmax概率最大） focus word</p>
+<h3 id="skip-gram"><a class="markdownIt-Anchor" href="#skip-gram"></a> Skip-Gram</h3>
+<p>输入：特定词 fucus word</p>
+<p>输出：特定词对应的上下文词向量</p>
+<h2 id="huffman-tree"><a class="markdownIt-Anchor" href="#huffman-tree"></a> Huffman Tree</h2>
+<p>高频词靠近树根，需要更少的时间即可被找到，符合贪心优化思想。</p>
+<p>采用二元逻辑回归方法，沿左子树走-&gt;负类（哈夫曼编码1），沿右子树走-&gt;正类（哈夫曼编码0）。判别方法：sigmoid:   <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mo>+</mo><mo stretchy="false">)</mo><mo>=</mo><mi>σ</mi><mo stretchy="false">(</mo><msubsup><mi>x</mi><mi>w</mi><mi>T</mi></msubsup><mi>θ</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mn>1</mn><mrow><mn>1</mn><mo>+</mo><msup><mi>e</mi><mrow><mo>−</mo><msubsup><mi>x</mi><mi>w</mi><mi>T</mi></msubsup><mi>θ</mi></mrow></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">P(+) = \sigma(x^T_w\theta) = \frac{1}{1 + e ^ {-x^T_w \theta}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord">+</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.0913309999999998em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">σ</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-2.4530000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02691em;">w</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.477529em;vertical-align:-0.632421em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.42591em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mbin mtight">+</span><span class="mord mtight"><span class="mord mathdefault mtight">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.091557142857143em;"><span style="top:-3.091557142857143em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.698092857142857em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight"><span class="mord mathdefault mtight">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9773299999999999em;"><span style="top:-2.28333em;margin-left:0em;margin-right:0.1em;"><span class="pstrut" style="height:2.6833299999999998em;"></span><span class="mord mathdefault mtight" style="margin-right:0.02691em;">w</span></span><span style="top:-2.97733em;margin-right:0.1em;"><span class="pstrut" style="height:2.6833299999999998em;"></span><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4em;"><span></span></span></span></span></span></span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">θ</span></span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.632421em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></p>
+<p>目标：找到合适的所有节点的词向量和所有内部节点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span></span></span></span>, 使训练样本达到最大似然。</p>
+<h2 id="negative-sampling"><a class="markdownIt-Anchor" href="#negative-sampling"></a> Negative Sampling</h2>
+<p>我们有一个训练样本，中心词是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span></span></span></span>,它周围上下文共有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mi>c</mi></mrow><annotation encoding="application/x-tex">2c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord mathdefault">c</span></span></span></span>个词，记为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>o</mi><mi>n</mi><mi>t</mi><mi>e</mi><mi>x</mi><mi>t</mi><mo stretchy="false">(</mo><mi>w</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">context(w)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault">x</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mclose">)</span></span></span></span>。由于这个中心词<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span></span></span></span>,的确和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>o</mi><mi>n</mi><mi>t</mi><mi>e</mi><mi>x</mi><mi>t</mi><mo stretchy="false">(</mo><mi>w</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">context(w)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault">x</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mclose">)</span></span></span></span>相关存在，因此它是一个真实的正例。通过Negative Sampling采样，我们得到neg个和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span></span></span></span>不同的中心词<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mi>i</mi></msub><mo separator="true">,</mo><mi>i</mi><mo>=</mo><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi>n</mi><mi>e</mi><mi>g</mi></mrow><annotation encoding="application/x-tex">w_i, i=1,2,..neg</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">.</span><span class="mord">.</span><span class="mord mathdefault">n</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span></span></span></span>，这样<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>o</mi><mi>n</mi><mi>t</mi><mi>e</mi><mi>x</mi><mi>t</mi><mo stretchy="false">(</mo><mi>w</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">context(w)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault">x</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mclose">)</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">w_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>就组成了neg个并不真实存在的负例。利用这一个正例和neg个负例，我们进行二元逻辑回归，得到负采样对应每个词对应的模型参数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>θ</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\theta_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，和每个词的词向量。</p>
+<p>一元模型分布 (unigram distribution) 来选择 negative words，一个单词被选作 negative sample 的概率跟它出现的频次有关，出现频次越高的单词越容易被选作negative words</p>
+]]></content>
+      <categories>
+        <category>Deep Learning</category>
+        <category>NLP</category>
+      </categories>
+      <tags>
+        <tag>分词</tag>
+        <tag>Word2vector</tag>
+        <tag>Negative Sampling</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/01/12/hello-world/</url>
+    <content><![CDATA[<p>Test</p>
+<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="quick-start"><a class="markdownIt-Anchor" href="#quick-start"></a> Quick Start</h2>
+<h3 id="create-a-new-post"><a class="markdownIt-Anchor" href="#create-a-new-post"></a> Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="run-server"><a class="markdownIt-Anchor" href="#run-server"></a> Run server</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="generate-static-files"><a class="markdownIt-Anchor" href="#generate-static-files"></a> Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="deploy-to-remote-sites"><a class="markdownIt-Anchor" href="#deploy-to-remote-sites"></a> Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>2022-08-31-Docker从入门到放弃(1)</title>
+    <url>/2022/08/31/2022-08-31-Docker%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-1/</url>
+    <content><![CDATA[<h1 id="docker安装"><a class="markdownIt-Anchor" href="#docker安装"></a> Docker安装</h1>
+<h2 id="centos安装"><a class="markdownIt-Anchor" href="#centos安装"></a> CentOS安装</h2>
+<h3 id="卸载旧版本"><a class="markdownIt-Anchor" href="#卸载旧版本"></a> 卸载旧版本</h3>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo yum remove docker \</span></span><br><span class="line"><span class="bash">                  docker-client \</span></span><br><span class="line"><span class="bash">                  docker-client-latest \</span></span><br><span class="line"><span class="bash">                  docker-common \</span></span><br><span class="line"><span class="bash">                  docker-latest \</span></span><br><span class="line"><span class="bash">                  docker-latest-logrotate \</span></span><br><span class="line"><span class="bash">                  docker-logrotate \</span></span><br><span class="line"><span class="bash">                  docker-engine</span></span><br></pre></td></tr></table></figure>
+<h3 id="安装方法"><a class="markdownIt-Anchor" href="#安装方法"></a> 安装方法</h3>
+<h4 id="设置repository"><a class="markdownIt-Anchor" href="#设置repository"></a> 设置repository</h4>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo yum install -y yum-utils</span></span><br></pre></td></tr></table></figure>
+<h4 id="安装docker-engine"><a class="markdownIt-Anchor" href="#安装docker-engine"></a> 安装Docker Engine</h4>
+<ul>
+<li>
+<p>安装最新版Docker Engine, containerd, Docker Compose</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo yum install docker-ce docker-ce-cli containerd.io docker-compose-plugin</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>安装特定版本Docker Engine</p>
+<ol>
+<li>
+<p>显示仓库内所有可用版本</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> yum list docker-ce --showduplicates | sort -r</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>安装指定版本</p>
+<p>e.g. <code>docker-ce-18.09.1</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo yum install docker-ce-&lt;VERSION_STRING&gt; docker-ce-cli-&lt;VERSION_STRING&gt; containerd.io docker-compose-plugin</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li>
+<p>启动Docker服务</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo systemctl start docker</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>（详见<a href="https://docs.docker.com/engine/install/centos/">docker engine install on CentOS</a>)</p>
+<h2 id="debianubuntu安装"><a class="markdownIt-Anchor" href="#debianubuntu安装"></a> Debian/Ubuntu安装</h2>
+<h3 id="卸载旧版本-2"><a class="markdownIt-Anchor" href="#卸载旧版本-2"></a> 卸载旧版本</h3>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get remove docker docker-engine docker.io containerd runc</span></span><br></pre></td></tr></table></figure>
+<h3 id="安装方法-2"><a class="markdownIt-Anchor" href="#安装方法-2"></a> 安装方法</h3>
+<h4 id="设置repository-2"><a class="markdownIt-Anchor" href="#设置repository-2"></a> 设置repository</h4>
+<ol>
+<li>
+<p>更新<code>apt</code>包索引，安装packages允许<code>apt</code>通过HTTPS使用repository</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo sudo apt-get update</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install \</span></span><br><span class="line"><span class="bash">				ca-certificates \</span></span><br><span class="line"><span class="bash">				curl \</span></span><br><span class="line"><span class="bash">				gnupg \</span></span><br><span class="line"><span class="bash">				lsb-release</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>添加Docker官方GPG key</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo mkdir -p /etc/apt/keyrings</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Debian</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Ubuntu</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>设置repository</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Debian</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> \</span></span><br><span class="line"><span class="bash">  <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \</span></span></span><br><span class="line"><span class="bash">  $(lsb_release -cs) stable<span class="string">&quot; | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Ubuntu</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> \</span></span><br><span class="line"><span class="bash">  <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \</span></span></span><br><span class="line"><span class="bash">  $(lsb_release -cs) stable<span class="string">&quot; | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null</span></span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="安装docker-engine-2"><a class="markdownIt-Anchor" href="#安装docker-engine-2"></a> 安装Docker Engine</h4>
+<ul>
+<li>
+<p>安装最新版Docker Engine, containerd, Docker Compose</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get update</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>安装特定版本Docker Engine</p>
+<ol>
+<li>
+<p>显示仓库内所有可用版本</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> apt-cache madison docker-ce</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>安装指定版本</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install docker-ce=&lt;VERSION_STRING&gt; docker-ce-cli=&lt;VERSION_STRING&gt; containerd.io docker-compose-plugin</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li>
+<p>启动Docker服务</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo service docker start</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>（详见<a href="https://docs.docker.com/engine/install/debian/">docker engine install on Debian</a>)</p>
+<h1 id="docker-运行"><a class="markdownIt-Anchor" href="#docker-运行"></a> Docker 运行</h1>
+<h2 id="images"><a class="markdownIt-Anchor" href="#images"></a> Images</h2>
+<ol>
+<li>
+<p>拉取镜像</p>
+<p>详见 <a href="https://docs.docker.com/engine/reference/commandline/pull/">docker pull</a></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker pull python</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker pull python:latest</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker pull python:3.10-alpine</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>List镜像</p>
+<p>详见 <a href="https://docs.docker.com/engine/reference/commandline/images/">docker images</a></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker images</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>删除镜像</p>
+<p>详见 <a href="https://docs.docker.com/engine/reference/commandline/rmi/">docker rmi</a></p>
+<p>若一个image存在多个tag，需要先删除所有<code>image:tag</code>，再删除image</p>
+<p>或采用<code>-f</code>强制一次性删除IMAGE ID</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 逐tag删除</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rmi python:v1</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rmi python:v2</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rmi python:latest</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 强制一次性删除</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rmi -f ce4168535f30</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="containers"><a class="markdownIt-Anchor" href="#containers"></a> Containers</h2>
+<ol>
+<li>
+<p>根据image创建并启动container</p>
+<p>详见<a href="https://docs.docker.com/engine/reference/commandline/run/">docker run</a></p>
+<p>首先基于指定的image<strong>创建</strong><code>docker create</code>一个可写的容器层，接着使用指定命令<strong>启动</strong><code>docker start</code>该容器</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker run [OPTIONS] IMAGE [COMMAND] [ARG...]</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker run --name <span class="built_in">test</span> -itd alpine /bin/sh</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>List所有container</p>
+<p>详见 <a href="https://docs.docker.com/engine/reference/commandline/ps/">docker ps</a></p>
+<p><code>--filter, -f</code>基于条件过滤</p>
+<p><code>--quiet, -q</code>仅显示containerID</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker ps [OPTIONS]</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker ps -a</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>进入container</p>
+<p>详见<a href="https://docs.docker.com/engine/reference/commandline/attach/">docker attach</a> 和<a href="https://docs.docker.com/engine/reference/commandline/exec/">docker exec</a></p>
+<ul>
+<li>
+<p>docker attach</p>
+<p>docker attach连接到container内正在运行的进程上，将展示<code>ENTRYPOINT/CMD</code>进程的输出，能够多次同时attach到同一个容器进程上，且会同步显示。</p>
+<p>在attach的进程上<code>^c</code>，该容器将停止；若仅想detach，则<code>^p ^q</code></p>
+</li>
+<li>
+<p>docker exec</p>
+<p>docker exec 在running状态的container中执行一个新的命令，并且当容器重启时，该命令不会重启。</p>
+<p>该命令停止<code>^c</code>时，不会影响container主命令的执行；若想退出时命令继续在后台运行，则<code>^p ^q</code>，但是暂时没找到回去的方法，且要退出的话 只能<code>kill -9 PID</code></p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker attach</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker attach [OPTIONS] CONTAINER</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker run --name <span class="built_in">test</span> -itd alpine</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker attach <span class="built_in">test</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker attach 8d3a1b90362b</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> docker <span class="built_in">exec</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker <span class="built_in">exec</span> [OPTIONS] CONTAINER COMMAND [ARG...]</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker <span class="built_in">exec</span> -it <span class="built_in">test</span> /bin/sh</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker <span class="built_in">exec</span> -it 8d3a1b90362b /bin/sh</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>停止/启动container</p>
+<p>详见<a href="https://docs.docker.com/engine/reference/commandline/stop/">docker stop</a> 和<a href="https://docs.docker.com/engine/reference/commandline/start/">docker start</a></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> stop a container</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker stop [OPTIONS] CONTAINER [CONTAINER...]</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker stop <span class="built_in">test</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker stop 8d3a1b90362b</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> start a container</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker start [OPTIONS] CONTAINER [CONTAINER...]</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker start <span class="built_in">test</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker start 8d3a1b90362b</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>查看日志</p>
+<p>详见<a href="https://docs.docker.com/engine/reference/commandline/logs/">docker logs</a></p>
+<p><code>--follow, -f</code>将显示连续的输出</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker logs [OPTIONS] CONTAINER</span>	</span><br><span class="line"><span class="meta">$</span><span class="bash"> docker logs -f <span class="built_in">test</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker logs -f 8d3a1b90362b</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>删除container</p>
+<p>详见<a href="https://docs.docker.com/engine/reference/commandline/rm/">docker rm</a></p>
+<p><code>--force, -f</code>将强制删除running状态的容器</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker rm [OPTIONS] CONTAINER [CONTAINER...]</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 强制删除运行的容器</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rm -f <span class="built_in">test</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除所有已停止的容器</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker rm $(docker ps --filter status=exited -q)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> docker ps --filter status=exited -q | xargs docker rm</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Development</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2022-12-01-磁盘扩容</title>
+    <url>/2022/12/01/2022-12-01-%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9/</url>
+    <content><![CDATA[<h1 id="磁盘扩容"><a class="markdownIt-Anchor" href="#磁盘扩容"></a> 磁盘扩容</h1>
+<ol>
+<li>
+<p><code>fdisk</code>创建新的分区</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">fdisk &#x2F;dev&#x2F;sda</span><br><span class="line">n</span><br><span class="line">+100G</span><br><span class="line">w</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><code>pvcreate</code>将物理硬盘分区初始化为物理卷，以便LVM使用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pvcreate &#x2F;dev&#x2F;sda4</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><code>vgextend</code>动态扩展LVM卷组</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vgextend vgsystem &#x2F;dev&#x2F;sda4</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><code>lvextend</code>扩展逻辑卷空间大小</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">lvextend -L +100G &#x2F;dev&#x2F;vgsystem&#x2F;root</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><code>resize2fs</code>增大或者收缩未加载的“ext2/ext3/ext4”文件系统的大小</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">resize2fs &#x2F;dev&#x2F;vgsystem&#x2F;root</span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+      <categories>
+        <category>IaaS</category>
+      </categories>
+      <tags>
+        <tag>disk</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2022-12-02-cgroup memory drop cache</title>
+    <url>/2022/12/02/2022-12-02-cgroup-memory-drop-cache/</url>
+    <content><![CDATA[<h1 id="cgroup-memory-drop-cache"><a class="markdownIt-Anchor" href="#cgroup-memory-drop-cache"></a> cgroup memory drop cache</h1>
+<h2 id="服务器环境"><a class="markdownIt-Anchor" href="#服务器环境"></a> 服务器环境</h2>
+<ul>
+<li>
+<p>架构</p>
+<p>海光X86</p>
+</li>
+<li>
+<p>内核版本</p>
+<p>4.19.90-23.15.v2101.ky10.x86_64</p>
+</li>
+</ul>
+<h2 id="问题现象描述"><a class="markdownIt-Anchor" href="#问题现象描述"></a> 问题现象描述</h2>
+<ul>
+<li>网络丢包</li>
+<li>网卡up/down</li>
+<li>etcd超时</li>
+<li>soft lockup等多发现象</li>
+</ul>
+<h2 id="问题分析"><a class="markdownIt-Anchor" href="#问题分析"></a> 问题分析</h2>
+<p>系统日志中出现 <code>soft lockup</code> （软锁死：当进程占用cpu时间超过2*watchdog_thresh会触发soft lockup）情况</p>
+]]></content>
+      <categories>
+        <category>问题排查与解决</category>
+      </categories>
+      <tags>
+        <tag>网络, etcd, soft lockup</tag>
+      </tags>
+  </entry>
+</search>

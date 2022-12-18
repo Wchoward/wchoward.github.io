@@ -40,8 +40,8 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
   };
 </script>
@@ -159,9 +159,34 @@
     <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
@@ -431,10 +456,19 @@
     </div>
     <ul class="links-of-blogroll-list">
         <li class="links-of-blogroll-item">
-          <a href="https://github.com/PluckySaltyfish/WCH_IS_DEAD" title="https:&#x2F;&#x2F;github.com&#x2F;PluckySaltyfish&#x2F;WCH_IS_DEAD" rel="noopener" target="_blank">情侣用LeetCode仓库</a>
+          <a href="https://github.com/Wchoward/IECE" title="https:&#x2F;&#x2F;github.com&#x2F;Wchoward&#x2F;IECE" rel="noopener" target="_blank">Implicit Emotion Cause Extraction</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/Wchoward/SMP2021-ECISA" title="https:&#x2F;&#x2F;github.com&#x2F;Wchoward&#x2F;SMP2021-ECISA" rel="noopener" target="_blank">中文隐式情感分析评测</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/Wchoward/SESA_Parents" title="https:&#x2F;&#x2F;github.com&#x2F;Wchoward&#x2F;SESA_Parents" rel="noopener" target="_blank">微信小程序英语学习综合训练支撑系统</a>
         </li>
         <li class="links-of-blogroll-item">
           <a href="https://github.com/PluckySaltyfish/DM-Hiring-Information" title="https:&#x2F;&#x2F;github.com&#x2F;PluckySaltyfish&#x2F;DM-Hiring-Information" rel="noopener" target="_blank">大数据职位招聘挖掘</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/PluckySaltyfish/WCH_IS_DEAD" title="https:&#x2F;&#x2F;github.com&#x2F;PluckySaltyfish&#x2F;WCH_IS_DEAD" rel="noopener" target="_blank">情侣用LeetCode仓库</a>
         </li>
     </ul>
   </div>
@@ -499,6 +533,10 @@
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 
