@@ -37,7 +37,7 @@
       appID: '',
       apiKey: '',
       indexName: '',
-      hits: {"per_page":10},
+      hits: {"per_page":5},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
     localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},
@@ -205,7 +205,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://wchoward.github.io/2020/02/24/2020-2-24-%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0(1)%E2%80%94%E2%80%94EmotiKLUE-at-IEST-2018-Topic-Informed-Classification-of-Implicit-Emotions/">
+    <link itemprop="mainEntityOfPage" href="https://wchoward.github.io/2021/01/12/2021-01-12-BERT-1-Tokenizer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/assets/header.jpg">
@@ -219,7 +219,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/02/24/2020-2-24-%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0(1)%E2%80%94%E2%80%94EmotiKLUE-at-IEST-2018-Topic-Informed-Classification-of-Implicit-Emotions/" class="post-title-link" itemprop="url">论文笔记(1)——EmotiKLUE at IEST 2018: Topic-Informed Classification of Implicit Emotions</a>
+            <a href="/2021/01/12/2021-01-12-BERT-1-Tokenizer/" class="post-title-link" itemprop="url">2021-01-12-BERT(1)_Tokenizer</a>
         </h1>
 
         <div class="post-meta">
@@ -229,14 +229,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-02-24 21:06:14" itemprop="dateCreated datePublished" datetime="2020-02-24T21:06:14+08:00">2020-02-24</time>
+              <time title="创建时间：2021-01-12 15:49:54" itemprop="dateCreated datePublished" datetime="2021-01-12T15:49:54+08:00">2021-01-12</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-12 15:48:13" itemprop="dateModified" datetime="2021-01-12T15:48:13+08:00">2021-01-12</time>
+                <time title="修改时间：2021-01-14 16:46:51" itemprop="dateModified" datetime="2021-01-14T16:46:51+08:00">2021-01-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -244,8 +244,14 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">论文笔记</span>
+                  <a href="/categories/Deep-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Deep Learning</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deep-Learning/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
                   </a>
                 </span>
             </span>
@@ -261,10 +267,351 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          EmotiKLUE at IEST 2018, Topic-Informed Classification of Implicit Emotions
+          <h1 id="使用"><a class="markdownIt-Anchor" href="#使用"></a> 使用</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> BertTokenizer</span><br><span class="line">self.bert_tokenizer = BertTokenizer.from_pretrained(<span class="string">&#x27;bert_model_path&#x27;</span>)</span><br><span class="line">indexed_tokens = self.bert_tokenizer.encode(example_text.strip(), add_special_tokens=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="encode流程"><a class="markdownIt-Anchor" href="#encode流程"></a> encode流程</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. BertTokenizer</span></span><br><span class="line"><span class="comment"># 2. PreTrainedTokenizer.encode</span></span><br><span class="line"><span class="comment"># 3. PreTrainedTokenizer.encode_plus</span></span><br><span class="line"><span class="comment"># 4. PreTrainedTokenizer.prepare_for_model</span></span><br><span class="line"><span class="comment"># 5. BertTokenizer.build_inputs_with_special_tokens (添加[CLS] [SEP])</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>
+<p>获取文本text</p>
+</li>
+<li>
+<p>读取词表vocab</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_vocab</span>(<span class="params">vocab_file</span>):</span></span><br><span class="line">    vocab = collections.OrderedDict()</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(vocab_file, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> reader:</span><br><span class="line">        tokens = reader.readlines()</span><br><span class="line">    <span class="keyword">for</span> index, token <span class="keyword">in</span> <span class="built_in">enumerate</span>(tokens):</span><br><span class="line">        token = token.rstrip(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">        vocab[token] = index</span><br><span class="line">    <span class="keyword">return</span> vocab</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>调用 encode方法 -&gt; encode_plus方法</p>
+</li>
+<li>
+<p>获取输入文本对应的token id （get_input_ids）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">convert_tokens_to_ids</span>(<span class="params">self, tokens</span>):</span></span><br><span class="line">	ids = []</span><br><span class="line">  <span class="keyword">for</span> token <span class="keyword">in</span> tokens:</span><br><span class="line">  	ids.append(self._convert_token_to_id_with_added_voc(token))</span><br><span class="line">  <span class="keyword">return</span> ids</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_convert_token_to_id_with_added_voc</span>(<span class="params">self, token</span>):</span></span><br><span class="line">	<span class="keyword">if</span> token <span class="keyword">in</span> self.added_tokens_encoder:</span><br><span class="line">		<span class="keyword">return</span> self.added_tokens_encoder[token]</span><br><span class="line">  <span class="keyword">return</span> self._convert_token_to_id(token)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_convert_token_to_id</span>(<span class="params">self, token</span>):</span></span><br><span class="line">	<span class="keyword">return</span> self.vocab.get(token, self.vocab.get(self.unk_token))</span><br></pre></td></tr></table></figure>
+<p>其中对于不在vocab中的词，返回<unk>对应的id</unk></p>
+</li>
+<li>
+<p>调用prepare_for_model方法返回Dictionary</p>
+<ul>
+<li><code>input_ids</code></li>
+<li><code>token_type_ids</code></li>
+<li><code>attention_mask</code></li>
+<li><code>overflowing_tokens</code></li>
+<li><code>num_truncated_tokens</code></li>
+<li><code>special_tokens_mask</code></li>
+</ul>
+</li>
+<li>
+<p>TBD</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wchoward.github.io/2021/01/12/hello-world/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/assets/header.jpg">
+      <meta itemprop="name" content="Howard WU">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wchoward">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/12/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-12 15:48:13" itemprop="dateCreated datePublished" datetime="2021-01-12T15:48:13+08:00">2021-01-12</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          A description about Hexo. Auto generated.
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/02/24/2020-2-24-%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0(1)%E2%80%94%E2%80%94EmotiKLUE-at-IEST-2018-Topic-Informed-Classification-of-Implicit-Emotions/">
+              <a class="btn" href="/2021/01/12/hello-world/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wchoward.github.io/2020/10/18/2020-10-18-C++%E4%BD%8D%E8%BF%90%E7%AE%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/assets/header.jpg">
+      <meta itemprop="name" content="Howard WU">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wchoward">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/18/2020-10-18-C++%E4%BD%8D%E8%BF%90%E7%AE%97/" class="post-title-link" itemprop="url">2020-10-18-C++位运算</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-18 21:07:10" itemprop="dateCreated datePublished" datetime="2020-10-18T21:07:10+08:00">2020-10-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-12 15:48:13" itemprop="dateModified" datetime="2021-01-12T15:48:13+08:00">2021-01-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          转载帅气的tyx的C++位运算表示二进制数
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/10/18/2020-10-18-C++%E4%BD%8D%E8%BF%90%E7%AE%97/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wchoward.github.io/2020/10/13/2020-10-13-Papers-on-Emotion-Cause-Analysis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/assets/header.jpg">
+      <meta itemprop="name" content="Howard WU">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wchoward">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/13/2020-10-13-Papers-on-Emotion-Cause-Analysis/" class="post-title-link" itemprop="url">2020-10-13-Papers-on-Emotion-Cause-Analysis</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-13 09:06:13" itemprop="dateCreated datePublished" datetime="2020-10-13T09:06:13+08:00">2020-10-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-12 15:48:13" itemprop="dateModified" datetime="2021-01-12T15:48:13+08:00">2021-01-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Papers/" itemprop="url" rel="index">
+                    <span itemprop="name">Papers</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          Papers on Emotion Cause Extraction / Detection
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/10/13/2020-10-13-Papers-on-Emotion-Cause-Analysis/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wchoward.github.io/2020/10/08/2020-10-08-Linux%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/assets/header.jpg">
+      <meta itemprop="name" content="Howard WU">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wchoward">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/08/2020-10-08-Linux%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/" class="post-title-link" itemprop="url">Linux常用操作</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-08 11:12:09" itemprop="dateCreated datePublished" datetime="2020-10-08T11:12:09+08:00">2020-10-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-12 15:48:13" itemprop="dateModified" datetime="2021-01-12T15:48:13+08:00">2021-01-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          Linux常用操作 Screen/Nohup等
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/10/08/2020-10-08-Linux%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -288,7 +635,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 

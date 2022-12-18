@@ -37,7 +37,7 @@
       appID: '',
       apiKey: '',
       indexName: '',
-      hits: {"per_page":10},
+      hits: {"per_page":5},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
     localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},
@@ -46,15 +46,15 @@
   };
 </script>
 
-  <meta name="description" content="Word2Vector 词向量 word2vec工具主要包含两个模型：  跳字模型（skip-gram） 连续词袋模型（continuous bag of words，简称CBOW），  以及两种高效训练的方法：  负采样（negative sampling） 层序softmax（hierarchical softmax）。   CBOW &amp; Skip-Gram  CBOW 输入：n个词">
+  <meta name="description" content="Word2Vector 词向量 word2vec工具主要包含两个模型：  跳字模型（skip-gram） 连续词袋模型（continuous bag of words，简称CBOW），  以及两种高效训练的方法：  负采样（negative sampling） 层序softmax（hierarchical softmax）。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2021-01-14-Word2Vec详解">
 <meta property="og:url" content="https://wchoward.github.io/2021/01/14/2021-01-14-Word2Vec%E8%AF%A6%E8%A7%A3/index.html">
 <meta property="og:site_name" content="Wchoward">
-<meta property="og:description" content="Word2Vector 词向量 word2vec工具主要包含两个模型：  跳字模型（skip-gram） 连续词袋模型（continuous bag of words，简称CBOW），  以及两种高效训练的方法：  负采样（negative sampling） 层序softmax（hierarchical softmax）。   CBOW &amp; Skip-Gram  CBOW 输入：n个词">
+<meta property="og:description" content="Word2Vector 词向量 word2vec工具主要包含两个模型：  跳字模型（skip-gram） 连续词袋模型（continuous bag of words，简称CBOW），  以及两种高效训练的方法：  负采样（negative sampling） 层序softmax（hierarchical softmax）。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-01-14T08:45:22.000Z">
-<meta property="article:modified_time" content="2021-01-20T09:03:53.872Z">
+<meta property="article:modified_time" content="2022-12-18T14:44:09.535Z">
 <meta property="article:author" content="Howard WU">
 <meta property="article:tag" content="分词">
 <meta property="article:tag" content="Word2vector">
@@ -242,7 +242,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-20 17:03:53" itemprop="dateModified" datetime="2021-01-20T17:03:53+08:00">2021-01-20</time>
+                <time title="修改时间：2022-12-18 22:44:09" itemprop="dateModified" datetime="2022-12-18T22:44:09+08:00">2022-12-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -284,6 +284,7 @@
 <li>负采样（negative sampling）</li>
 <li>层序softmax（hierarchical softmax）。</li>
 </ul>
+<a id="more"></a>
 <h2 id="cbow-skip-gram"><a class="markdownIt-Anchor" href="#cbow-skip-gram"></a> CBOW &amp; Skip-Gram</h2>
 <h3 id="cbow"><a class="markdownIt-Anchor" href="#cbow"></a> CBOW</h3>
 <p>输入：n个词向量 context词</p>

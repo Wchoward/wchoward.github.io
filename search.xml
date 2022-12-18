@@ -57,6 +57,45 @@
       </tags>
   </entry>
   <entry>
+    <title>Linux常用操作</title>
+    <url>/2020/10/08/2020-10-08-Linux%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<h3 id="gpu相关"><a class="markdownIt-Anchor" href="#gpu相关"></a> GPU相关</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># check gpu status</span></span><br><span class="line">$ nvidia-smi</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">$ gpustat</span><br><span class="line"></span><br><span class="line"><span class="comment"># set gpu visible</span></span><br><span class="line">$ <span class="built_in">export</span> CUDA_VISIBLE_DEVICES=5</span><br></pre></td></tr></table></figure>
+<h3 id="输出重定向"><a class="markdownIt-Anchor" href="#输出重定向"></a> 输出重定向</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">command</span> &amp;&gt; myout.log</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">$ comman &gt; myout.log 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<h3 id="后台运行进程"><a class="markdownIt-Anchor" href="#后台运行进程"></a> 后台运行进程</h3>
+<h4 id="screen"><a class="markdownIt-Anchor" href="#screen"></a> Screen</h4>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ screen -S <span class="built_in">test</span></span><br><span class="line">$ screen -r <span class="built_in">test</span></span><br><span class="line">$ screen -X -S <span class="built_in">test</span> quit</span><br></pre></td></tr></table></figure>
+<h4 id="nohup"><a class="markdownIt-Anchor" href="#nohup"></a> Nohup</h4>
+<ol>
+<li>创建进程</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建进程</span></span><br><span class="line">$ nohup <span class="built_in">command</span> &gt; myout.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>查看进程</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看进程</span></span><br><span class="line">$ <span class="built_in">jobs</span></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">$ ps -aux | grep <span class="built_in">command</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>关闭进程</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># jobs 查看jobnum</span></span><br><span class="line">$ <span class="built_in">kill</span> %jobnum</span><br><span class="line"><span class="comment"># ps查看进程号PID</span></span><br><span class="line">$ <span class="built_in">kill</span> %PID</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>进程前后台切换</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 后台调至前台</span></span><br><span class="line">$ <span class="built_in">fg</span> %jobnum</span><br><span class="line"><span class="comment"># 前台放到后台，并处于暂停状态</span></span><br><span class="line">$ Ctrl + z</span><br><span class="line"><span class="comment"># 后台暂停状态变执行</span></span><br><span class="line">$ <span class="built_in">bg</span> %jobnum</span><br></pre></td></tr></table></figure>
+<h3 id="查看磁盘使用情况"><a class="markdownIt-Anchor" href="#查看磁盘使用情况"></a> 查看磁盘使用情况</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 整体磁盘空间</span></span><br><span class="line">$ df -lh</span><br><span class="line"><span class="comment"># 当前目录下使用空间</span></span><br><span class="line">$ du --max-depth=1 -h</span><br></pre></td></tr></table></figure>
+<h4 id><a class="markdownIt-Anchor" href="#"></a> </h4>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Shell</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2020-10-18-C++位运算</title>
     <url>/2020/10/18/2020-10-18-C++%E4%BD%8D%E8%BF%90%E7%AE%97/</url>
     <content><![CDATA[<blockquote>
@@ -120,45 +159,6 @@
       <tags>
         <tag>C++</tag>
         <tag>位运算</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux常用操作</title>
-    <url>/2020/10/08/2020-10-08-Linux%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/</url>
-    <content><![CDATA[<h3 id="gpu相关"><a class="markdownIt-Anchor" href="#gpu相关"></a> GPU相关</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># check gpu status</span></span><br><span class="line">$ nvidia-smi</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">$ gpustat</span><br><span class="line"></span><br><span class="line"><span class="comment"># set gpu visible</span></span><br><span class="line">$ <span class="built_in">export</span> CUDA_VISIBLE_DEVICES=5</span><br></pre></td></tr></table></figure>
-<h3 id="输出重定向"><a class="markdownIt-Anchor" href="#输出重定向"></a> 输出重定向</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">command</span> &amp;&gt; myout.log</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">$ comman &gt; myout.log 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
-<h3 id="后台运行进程"><a class="markdownIt-Anchor" href="#后台运行进程"></a> 后台运行进程</h3>
-<h4 id="screen"><a class="markdownIt-Anchor" href="#screen"></a> Screen</h4>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ screen -S <span class="built_in">test</span></span><br><span class="line">$ screen -r <span class="built_in">test</span></span><br><span class="line">$ screen -X -S <span class="built_in">test</span> quit</span><br></pre></td></tr></table></figure>
-<h4 id="nohup"><a class="markdownIt-Anchor" href="#nohup"></a> Nohup</h4>
-<ol>
-<li>创建进程</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建进程</span></span><br><span class="line">$ nohup <span class="built_in">command</span> &gt; myout.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>查看进程</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看进程</span></span><br><span class="line">$ <span class="built_in">jobs</span></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">$ ps -aux | grep <span class="built_in">command</span></span><br></pre></td></tr></table></figure>
-<ol start="3">
-<li>关闭进程</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># jobs 查看jobnum</span></span><br><span class="line">$ <span class="built_in">kill</span> %jobnum</span><br><span class="line"><span class="comment"># ps查看进程号PID</span></span><br><span class="line">$ <span class="built_in">kill</span> %PID</span><br></pre></td></tr></table></figure>
-<ol start="4">
-<li>进程前后台切换</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 后台调至前台</span></span><br><span class="line">$ <span class="built_in">fg</span> %jobnum</span><br><span class="line"><span class="comment"># 前台放到后台，并处于暂停状态</span></span><br><span class="line">$ Ctrl + z</span><br><span class="line"><span class="comment"># 后台暂停状态变执行</span></span><br><span class="line">$ <span class="built_in">bg</span> %jobnum</span><br></pre></td></tr></table></figure>
-<h3 id="查看磁盘使用情况"><a class="markdownIt-Anchor" href="#查看磁盘使用情况"></a> 查看磁盘使用情况</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 整体磁盘空间</span></span><br><span class="line">$ df -lh</span><br><span class="line"><span class="comment"># 当前目录下使用空间</span></span><br><span class="line">$ du --max-depth=1 -h</span><br></pre></td></tr></table></figure>
-<h4 id><a class="markdownIt-Anchor" href="#"></a> </h4>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>Shell</tag>
       </tags>
   </entry>
   <entry>
@@ -268,6 +268,7 @@
 <li>负采样（negative sampling）</li>
 <li>层序softmax（hierarchical softmax）。</li>
 </ul>
+<a id="more"></a>
 <h2 id="cbow-skip-gram"><a class="markdownIt-Anchor" href="#cbow-skip-gram"></a> CBOW &amp; Skip-Gram</h2>
 <h3 id="cbow"><a class="markdownIt-Anchor" href="#cbow"></a> CBOW</h3>
 <p>输入：n个词向量 context词</p>
@@ -304,6 +305,7 @@
 <li><code>hexo g</code>生成静态网页，然后<code>hexo s</code>本地预览效果，确保没问题后执行<code>hexo d</code>（在此之前可能需要<code>hexo clean</code>清下缓存）部署，会自动将最新静态文件改动更新到master分支了；</li>
 <li>然后将本地hexo分支的改动也更新到git。</li>
 </ol>
+<a id="more"></a>
 <h1 id="hexo常用命令"><a class="markdownIt-Anchor" href="#hexo常用命令"></a> Hexo常用命令</h1>
 <p>初始相关</p>
 <ul>
@@ -505,9 +507,10 @@
 <li>
 <p><code>fdisk</code>创建新的分区</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">fdisk &#x2F;dev&#x2F;sda</span><br><span class="line">n</span><br><span class="line">+100G</span><br><span class="line">w</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 </li>
 <li>
-<p><code>pvcreate</code>将物理硬盘分区初始化为物理卷，以便LVM使用</p>
+<p>pvcreate`将物理硬盘分区初始化为物理卷，以便LVM使用</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pvcreate &#x2F;dev&#x2F;sda4</span><br></pre></td></tr></table></figure>
 </li>
 <li>
@@ -545,6 +548,7 @@
 <p>4.19.90-23.15.v2101.ky10.x86_64</p>
 </li>
 </ul>
+<a id="more"></a>
 <h2 id="问题现象描述"><a class="markdownIt-Anchor" href="#问题现象描述"></a> 问题现象描述</h2>
 <ul>
 <li>网络丢包</li>
