@@ -678,6 +678,18 @@
 <p>选主类重启是因为etcd响应慢，etcd响应慢是因为I/O请求卡在了D2C阶段。</p>
 <p>D2C代表IO请求在driver和硬件上所消耗的时间，因此下一阶段将排查磁盘硬件问题。</p>
 <h2 id="排查过程下"><a class="markdownIt-Anchor" href="#排查过程下"></a> 排查过程（下）</h2>
+<ol>
+<li>
+<p>根据问题发生时间可以推断，在3点时存在</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#.&#x2F;storcli64 &#x2F;c0 show all |grep –i Date</span><br><span class="line"></span><br><span class="line">Current Controller Date&#x2F;Time &#x3D; 12&#x2F;19&#x2F;2022, 08:41:16</span><br><span class="line">Current System Date&#x2F;time &#x3D; 12&#x2F;19&#x2F;2022, 16:41:06</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>是</p>
+</li>
+<li>
+<p>是</p>
+</li>
+</ol>
 ]]></content>
       <categories>
         <category>问题排查与解决</category>
@@ -688,7 +700,7 @@
   </entry>
   <entry>
     <title>2022-12-19-磁盘IO相关指标</title>
-    <url>/2022/12/19/2022-12-19-%E7%A3%81%E7%9B%98IO%E7%9B%B8%E5%85%B3%E6%8C%87%E6%A0%87/</url>
+    <url>/2022/12/19/2022-12-19-%E7%A3%81%E7%9B%98IO%E7%9B%B8%E5%85%B3%E5%B7%A5%E5%85%B7%E5%8F%8A%E6%8C%87%E6%A0%87/</url>
     <content><![CDATA[]]></content>
   </entry>
 </search>
