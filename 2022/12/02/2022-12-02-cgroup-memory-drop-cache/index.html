@@ -46,15 +46,15 @@
   };
 </script>
 
-  <meta name="description" content="cgroup memory drop cache  服务器环境   架构 海光X86   内核版本 4.19.90-23.15.v2101.ky10.x86_64">
+  <meta name="description" content="服务器环境   架构 海光X86   内核版本 4.19.90-23.15.v2101.ky10.x86_64">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2022-12-02-cgroup memory drop cache">
 <meta property="og:url" content="https://wchoward.github.io/2022/12/02/2022-12-02-cgroup-memory-drop-cache/index.html">
 <meta property="og:site_name" content="Wchoward">
-<meta property="og:description" content="cgroup memory drop cache  服务器环境   架构 海光X86   内核版本 4.19.90-23.15.v2101.ky10.x86_64">
+<meta property="og:description" content="服务器环境   架构 海光X86   内核版本 4.19.90-23.15.v2101.ky10.x86_64">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-12-02T07:43:32.000Z">
-<meta property="article:modified_time" content="2022-12-19T10:17:18.110Z">
+<meta property="article:modified_time" content="2022-12-19T12:38:47.210Z">
 <meta property="article:author" content="Howard WU">
 <meta property="article:tag" content="网络, etcd, soft lockup">
 <meta name="twitter:card" content="summary">
@@ -242,7 +242,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-12-19 18:17:18" itemprop="dateModified" datetime="2022-12-19T18:17:18+08:00">2022-12-19</time>
+                <time title="修改时间：2022-12-19 20:38:47" itemprop="dateModified" datetime="2022-12-19T20:38:47+08:00">2022-12-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -267,8 +267,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="cgroup-memory-drop-cache"><a class="markdownIt-Anchor" href="#cgroup-memory-drop-cache"></a> cgroup memory drop cache</h1>
-<h2 id="服务器环境"><a class="markdownIt-Anchor" href="#服务器环境"></a> 服务器环境</h2>
+        <h1 id="服务器环境"><a class="markdownIt-Anchor" href="#服务器环境"></a> 服务器环境</h1>
 <ul>
 <li>
 <p>架构</p>
@@ -280,22 +279,22 @@
 </li>
 </ul>
 <a id="more"></a>
-<h2 id="问题现象描述"><a class="markdownIt-Anchor" href="#问题现象描述"></a> 问题现象描述</h2>
+<h1 id="问题现象描述"><a class="markdownIt-Anchor" href="#问题现象描述"></a> 问题现象描述</h1>
 <ul>
 <li>网络丢包</li>
 <li>网卡up/down</li>
 <li>etcd超时</li>
 <li>soft lockup等多发现象</li>
 </ul>
-<h2 id="问题分析"><a class="markdownIt-Anchor" href="#问题分析"></a> 问题分析</h2>
-<h3 id="现象分析"><a class="markdownIt-Anchor" href="#现象分析"></a> 现象分析</h3>
+<h1 id="问题分析"><a class="markdownIt-Anchor" href="#问题分析"></a> 问题分析</h1>
+<h2 id="现象分析"><a class="markdownIt-Anchor" href="#现象分析"></a> 现象分析</h2>
 <p>系统日志中出现 <code>soft lockup</code> （软锁死：当进程占用cpu时间超过2*watchdog_thresh会触发soft lockup）情况。</p>
 <p>网卡采取多队列方式，每个网卡队列都有绑定到对应的一个CPU核上，当CPU核触发软锁死状态下，所在网卡队列软中断无法得到相应，从而影响卡网队列的数据收发，导致出现“网络丢包、etcd超时、网卡up/down”现象。</p>
 <p>通过查看日志中软锁死的信息，第一个以及大部分软锁死信息由kubelet产生。从kubelet进程堆栈打印信息，进程锁死在读取cgroup下<code>memory.numa_stat</code>信息过程中。</p>
 <p>尝试在有问题的机器上<code>cat /sys/fs/cgroup/memory/memory.numa_stat</code>手动读取cgroup信息，查询命令的执行完成消耗接近20秒，较正常的机器（微秒或毫秒级别）高出个级别，属于异常结果表现。</p>
 <p>针对上述现象通过<code>cat /proc/cgroups</code>去查看cgroup信息，发现 memory cgroup的数量（几万个）比正常机器（几百个）高出了几万个。</p>
 <p>同时通过<code>cat /sys/fs/cgroup/memory/memory.numa_stat</code>查看 memory.numa_stat，发现memory cgroup的hierarchical_total数也增加了很多，而实际去统计查看memory cgroup下的目录层级数量却很少。</p>
-<h3 id="原因分析"><a class="markdownIt-Anchor" href="#原因分析"></a> 原因分析</h3>
+<h2 id="原因分析"><a class="markdownIt-Anchor" href="#原因分析"></a> 原因分析</h2>
 <ol>
 <li>
 <p>导致出现大量memory group，以及cgroup统计数量与查看到的目录层级不一致的原因</p>
@@ -311,16 +310,16 @@
 <p>该接口通过遍历整个cgroup树来获取相关统计信息。当系统上整个cgroup树的层级以及节点增大时，其遍历过程的耗时将随之而递增。</p>
 </li>
 </ol>
-<h2 id="问题初步分析总结"><a class="markdownIt-Anchor" href="#问题初步分析总结"></a> 问题初步分析总结</h2>
+<h1 id="问题初步分析总结"><a class="markdownIt-Anchor" href="#问题初步分析总结"></a> 问题初步分析总结</h1>
 <ol>
 <li>在系统内核版本中，获取cgroup下numa_stat会随着cgroup的层级以及节点数量增大而耗时变长</li>
 <li>通过合入memcg的优化补丁，能解决获取cgroup下numa_stat随着cgroup的层级以及节点数量增大而耗时变长问题</li>
 </ol>
-<h2 id="问题解决方案"><a class="markdownIt-Anchor" href="#问题解决方案"></a> 问题解决方案</h2>
-<h3 id="临时解决方案通过周期清理系统cache"><a class="markdownIt-Anchor" href="#临时解决方案通过周期清理系统cache"></a> 临时解决方案——通过周期清理系统cache</h3>
+<h1 id="问题解决方案"><a class="markdownIt-Anchor" href="#问题解决方案"></a> 问题解决方案</h1>
+<h2 id="临时解决方案通过周期清理系统cache"><a class="markdownIt-Anchor" href="#临时解决方案通过周期清理系统cache"></a> 临时解决方案——通过周期清理系统cache</h2>
 <p>问题出现时，通过<code>echo 3 &gt; /proc/sys/vm/drop_caches</code>可以清理残留的cgroup内存页信息，减少memory cgroup数量以及层级数。因此，可采用周期性清理cache的方式规避numa_stat读取耗时过长问题。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">timeout 3s cat /sys/fs/cgroup/memory/memory.numa_stat &gt; /dev/null</span><br><span class="line">if [ $? == 124 ];then</span><br><span class="line">  sync;sync;sync #写入硬盘，防止数据丢失</span><br><span class="line">  sleep 1 #延迟1s</span><br><span class="line">  echo 3 &gt; /proc/sys/vm/drop_caches</span><br><span class="line">  echo &quot;drop cache `date`&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-<h3 id="稳定解决方案升级内核小版本"><a class="markdownIt-Anchor" href="#稳定解决方案升级内核小版本"></a> 稳定解决方案——升级内核小版本</h3>
+<h2 id="稳定解决方案升级内核小版本"><a class="markdownIt-Anchor" href="#稳定解决方案升级内核小版本"></a> 稳定解决方案——升级内核小版本</h2>
 <p>统计速度慢问题时linux低版本内核通用问题，较新的linux社区内核已有针对cgroup内存统计的优化补丁。</p>
 
     </div>
@@ -424,7 +423,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#cgroup-memory-drop-cache"><span class="nav-number">1.</span> <span class="nav-text"> cgroup memory drop cache</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.</span> <span class="nav-text"> 服务器环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E7%8E%B0%E8%B1%A1%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.2.</span> <span class="nav-text"> 问题现象描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90"><span class="nav-number">1.3.</span> <span class="nav-text"> 问题分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%B0%E8%B1%A1%E5%88%86%E6%9E%90"><span class="nav-number">1.3.1.</span> <span class="nav-text"> 现象分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90"><span class="nav-number">1.3.2.</span> <span class="nav-text"> 原因分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%9D%E6%AD%A5%E5%88%86%E6%9E%90%E6%80%BB%E7%BB%93"><span class="nav-number">1.4.</span> <span class="nav-text"> 问题初步分析总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.5.</span> <span class="nav-text"> 问题解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%B4%E6%97%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E9%80%9A%E8%BF%87%E5%91%A8%E6%9C%9F%E6%B8%85%E7%90%86%E7%B3%BB%E7%BB%9Fcache"><span class="nav-number">1.5.1.</span> <span class="nav-text"> 临时解决方案——通过周期清理系统cache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A8%B3%E5%AE%9A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E5%8D%87%E7%BA%A7%E5%86%85%E6%A0%B8%E5%B0%8F%E7%89%88%E6%9C%AC"><span class="nav-number">1.5.2.</span> <span class="nav-text"> 稳定解决方案——升级内核小版本</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text"> 服务器环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E7%8E%B0%E8%B1%A1%E6%8F%8F%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text"> 问题现象描述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text"> 问题分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%B0%E8%B1%A1%E5%88%86%E6%9E%90"><span class="nav-number">3.1.</span> <span class="nav-text"> 现象分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90"><span class="nav-number">3.2.</span> <span class="nav-text"> 原因分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%9D%E6%AD%A5%E5%88%86%E6%9E%90%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text"> 问题初步分析总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">5.</span> <span class="nav-text"> 问题解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%B4%E6%97%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E9%80%9A%E8%BF%87%E5%91%A8%E6%9C%9F%E6%B8%85%E7%90%86%E7%B3%BB%E7%BB%9Fcache"><span class="nav-number">5.1.</span> <span class="nav-text"> 临时解决方案——通过周期清理系统cache</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A8%B3%E5%AE%9A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E5%8D%87%E7%BA%A7%E5%86%85%E6%A0%B8%E5%B0%8F%E7%89%88%E6%9C%AC"><span class="nav-number">5.2.</span> <span class="nav-text"> 稳定解决方案——升级内核小版本</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

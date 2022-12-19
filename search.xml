@@ -343,8 +343,7 @@
   <entry>
     <title>2022-12-01-磁盘扩容</title>
     <url>/2022/12/01/2022-12-01-%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9/</url>
-    <content><![CDATA[<h1 id="磁盘扩容"><a class="markdownIt-Anchor" href="#磁盘扩容"></a> 磁盘扩容</h1>
-<p>由于划盘的时候给逻辑卷划的空间太小了，后期需要扩盘，这篇文章主要记录了具体扩容的操作，以供参考。</p>
+    <content><![CDATA[<p>由于划盘的时候给逻辑卷划的空间太小了，后期需要扩盘，这篇文章主要记录了具体扩容的操作，以供参考。</p>
 <a id="more"></a>
 <ol>
 <li>
@@ -398,8 +397,7 @@
   <entry>
     <title>2022-12-02-cgroup memory drop cache</title>
     <url>/2022/12/02/2022-12-02-cgroup-memory-drop-cache/</url>
-    <content><![CDATA[<h1 id="cgroup-memory-drop-cache"><a class="markdownIt-Anchor" href="#cgroup-memory-drop-cache"></a> cgroup memory drop cache</h1>
-<h2 id="服务器环境"><a class="markdownIt-Anchor" href="#服务器环境"></a> 服务器环境</h2>
+    <content><![CDATA[<h1 id="服务器环境"><a class="markdownIt-Anchor" href="#服务器环境"></a> 服务器环境</h1>
 <ul>
 <li>
 <p>架构</p>
@@ -411,22 +409,22 @@
 </li>
 </ul>
 <a id="more"></a>
-<h2 id="问题现象描述"><a class="markdownIt-Anchor" href="#问题现象描述"></a> 问题现象描述</h2>
+<h1 id="问题现象描述"><a class="markdownIt-Anchor" href="#问题现象描述"></a> 问题现象描述</h1>
 <ul>
 <li>网络丢包</li>
 <li>网卡up/down</li>
 <li>etcd超时</li>
 <li>soft lockup等多发现象</li>
 </ul>
-<h2 id="问题分析"><a class="markdownIt-Anchor" href="#问题分析"></a> 问题分析</h2>
-<h3 id="现象分析"><a class="markdownIt-Anchor" href="#现象分析"></a> 现象分析</h3>
+<h1 id="问题分析"><a class="markdownIt-Anchor" href="#问题分析"></a> 问题分析</h1>
+<h2 id="现象分析"><a class="markdownIt-Anchor" href="#现象分析"></a> 现象分析</h2>
 <p>系统日志中出现 <code>soft lockup</code> （软锁死：当进程占用cpu时间超过2*watchdog_thresh会触发soft lockup）情况。</p>
 <p>网卡采取多队列方式，每个网卡队列都有绑定到对应的一个CPU核上，当CPU核触发软锁死状态下，所在网卡队列软中断无法得到相应，从而影响卡网队列的数据收发，导致出现“网络丢包、etcd超时、网卡up/down”现象。</p>
 <p>通过查看日志中软锁死的信息，第一个以及大部分软锁死信息由kubelet产生。从kubelet进程堆栈打印信息，进程锁死在读取cgroup下<code>memory.numa_stat</code>信息过程中。</p>
 <p>尝试在有问题的机器上<code>cat /sys/fs/cgroup/memory/memory.numa_stat</code>手动读取cgroup信息，查询命令的执行完成消耗接近20秒，较正常的机器（微秒或毫秒级别）高出个级别，属于异常结果表现。</p>
 <p>针对上述现象通过<code>cat /proc/cgroups</code>去查看cgroup信息，发现 memory cgroup的数量（几万个）比正常机器（几百个）高出了几万个。</p>
 <p>同时通过<code>cat /sys/fs/cgroup/memory/memory.numa_stat</code>查看 memory.numa_stat，发现memory cgroup的hierarchical_total数也增加了很多，而实际去统计查看memory cgroup下的目录层级数量却很少。</p>
-<h3 id="原因分析"><a class="markdownIt-Anchor" href="#原因分析"></a> 原因分析</h3>
+<h2 id="原因分析"><a class="markdownIt-Anchor" href="#原因分析"></a> 原因分析</h2>
 <ol>
 <li>
 <p>导致出现大量memory group，以及cgroup统计数量与查看到的目录层级不一致的原因</p>
@@ -442,16 +440,16 @@
 <p>该接口通过遍历整个cgroup树来获取相关统计信息。当系统上整个cgroup树的层级以及节点增大时，其遍历过程的耗时将随之而递增。</p>
 </li>
 </ol>
-<h2 id="问题初步分析总结"><a class="markdownIt-Anchor" href="#问题初步分析总结"></a> 问题初步分析总结</h2>
+<h1 id="问题初步分析总结"><a class="markdownIt-Anchor" href="#问题初步分析总结"></a> 问题初步分析总结</h1>
 <ol>
 <li>在系统内核版本中，获取cgroup下numa_stat会随着cgroup的层级以及节点数量增大而耗时变长</li>
 <li>通过合入memcg的优化补丁，能解决获取cgroup下numa_stat随着cgroup的层级以及节点数量增大而耗时变长问题</li>
 </ol>
-<h2 id="问题解决方案"><a class="markdownIt-Anchor" href="#问题解决方案"></a> 问题解决方案</h2>
-<h3 id="临时解决方案通过周期清理系统cache"><a class="markdownIt-Anchor" href="#临时解决方案通过周期清理系统cache"></a> 临时解决方案——通过周期清理系统cache</h3>
+<h1 id="问题解决方案"><a class="markdownIt-Anchor" href="#问题解决方案"></a> 问题解决方案</h1>
+<h2 id="临时解决方案通过周期清理系统cache"><a class="markdownIt-Anchor" href="#临时解决方案通过周期清理系统cache"></a> 临时解决方案——通过周期清理系统cache</h2>
 <p>问题出现时，通过<code>echo 3 &gt; /proc/sys/vm/drop_caches</code>可以清理残留的cgroup内存页信息，减少memory cgroup数量以及层级数。因此，可采用周期性清理cache的方式规避numa_stat读取耗时过长问题。</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">timeout 3s cat /sys/fs/cgroup/memory/memory.numa_stat &gt; /dev/null</span><br><span class="line">if [ $? == 124 ];then</span><br><span class="line">  sync;sync;sync #写入硬盘，防止数据丢失</span><br><span class="line">  sleep 1 #延迟1s</span><br><span class="line">  echo 3 &gt; /proc/sys/vm/drop_caches</span><br><span class="line">  echo &quot;drop cache `date`&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-<h3 id="稳定解决方案升级内核小版本"><a class="markdownIt-Anchor" href="#稳定解决方案升级内核小版本"></a> 稳定解决方案——升级内核小版本</h3>
+<h2 id="稳定解决方案升级内核小版本"><a class="markdownIt-Anchor" href="#稳定解决方案升级内核小版本"></a> 稳定解决方案——升级内核小版本</h2>
 <p>统计速度慢问题时linux低版本内核通用问题，较新的linux社区内核已有针对cgroup内存统计的优化补丁。</p>
 ]]></content>
       <categories>
@@ -623,22 +621,21 @@
   <entry>
     <title>2022-12-19-K8S ETCD超时磁盘问题排查与分析</title>
     <url>/2022/12/19/2022-12-19-K8S-ETCD%E8%B6%85%E6%97%B6%E7%A3%81%E7%9B%98%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E4%B8%8E%E5%88%86%E6%9E%90/</url>
-    <content><![CDATA[<h1 id="k8s-etcd超时磁盘问题排查与分析"><a class="markdownIt-Anchor" href="#k8s-etcd超时磁盘问题排查与分析"></a> K8S ETCD超时磁盘问题排查与分析</h1>
-<p>在K8S集群中，存在选主类管理组件重启和etcd WAL sync超时的告警。该文章主要记录对应的排查思路与分析。</p>
+    <content><![CDATA[<p>在K8S集群中，存在选主类管理组件重启和etcd WAL sync超时的告警。该文章主要记录对应的排查思路与分析。</p>
 <a id="more"></a>
-<h2 id="问题现象描述"><a class="markdownIt-Anchor" href="#问题现象描述"></a> 问题现象描述</h2>
+<h1 id="问题现象描述"><a class="markdownIt-Anchor" href="#问题现象描述"></a> 问题现象描述</h1>
 <p>K8S选主类组件发生告警：</p>
 <blockquote>
 <p>POD kube-controller-manager-{IP}频繁重启，当前POD累计重启2次</p>
 </blockquote>
-<h2 id="问题排查与分析"><a class="markdownIt-Anchor" href="#问题排查与分析"></a> 问题排查与分析</h2>
-<h3 id="排查思路"><a class="markdownIt-Anchor" href="#排查思路"></a> 排查思路</h3>
+<h1 id="问题排查与分析"><a class="markdownIt-Anchor" href="#问题排查与分析"></a> 问题排查与分析</h1>
+<h2 id="排查思路"><a class="markdownIt-Anchor" href="#排查思路"></a> 排查思路</h2>
 <p>选主类管理组件的选主请求路径为：</p>
 <blockquote>
 <p>选主类pod --&gt; F5 --&gt; apiserver --&gt; etcd --&gt; 磁盘</p>
 </blockquote>
-<h3 id="排查过程上"><a class="markdownIt-Anchor" href="#排查过程上"></a> 排查过程（上）</h3>
-<h4 id="日志"><a class="markdownIt-Anchor" href="#日志"></a> 日志</h4>
+<h2 id="排查过程上"><a class="markdownIt-Anchor" href="#排查过程上"></a> 排查过程（上）</h2>
+<h3 id="日志"><a class="markdownIt-Anchor" href="#日志"></a> 日志</h3>
 <ol>
 <li>
 <p>查看重启POD kube-controller-manaer的日志，在11:34:51有选主请求超时引起的主丢失的报错</p>
@@ -653,7 +650,7 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">WARNING: 2022&#x2F;11&#x2F;26 11:34:43 grpc: Server.processUnaryRPC failed to write status: connection error: desc &#x3D; &quot;transport is closing&quot;</span><br><span class="line">2022-11-26 11:34:51 W| wal: sync duration of 12.72s, expected less than 1s</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<h4 id="指标"><a class="markdownIt-Anchor" href="#指标"></a> 指标</h4>
+<h3 id="指标"><a class="markdownIt-Anchor" href="#指标"></a> 指标</h3>
 <p>从请求路径上日志报错来看，存在请求超时，且跟网络和磁盘强相关，进一步查看etcd网络和磁盘相关指标，发现：</p>
 <ol>
 <li>
@@ -667,7 +664,7 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 磁盘io数据抓取</span></span><br><span class="line">pidstat -d 1 3600 &gt;&gt; pidstat.log</span><br><span class="line">top -d 1 -n 3600 -b | tee topd.log</span><br><span class="line">iostat -d 1 -t 3600 &gt;&gt; iostat.log</span><br><span class="line">sh run_sdc_blktrace.sh</span><br></pre></td></tr></table></figure>
 <p>其中，<code>run_sdc_blktrace.sh</code>具体脚本为：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">dt0=`date + &quot;%Y%m%d%H&quot;`</span><br><span class="line">mkdir /root/sdc-trace-$&#123;dt0&#125;</span><br><span class="line">count=0</span><br><span class="line">while [ $count -lt 60 ]</span><br><span class="line">do</span><br><span class="line">  cd /root/sdc-trace-$&#123;dt0&#125;</span><br><span class="line">  dt=`date + &quot;%Y%m%d%H%M%S&quot;`</span><br><span class="line">  dir=&quot;sdc-trace&quot;-$&#123;dt&#125;</span><br><span class="line">  mkdir $&#123;dir&#125;</span><br><span class="line">  blktrace -d /dev/sdc -o sdc-trace -w 60</span><br><span class="line">  blkparse -i sdc-trace -d sdc.blktrace.bin -o sdc-trace.txt</span><br><span class="line">  btt -i sdc.blktrace.bin -o btt.txt</span><br><span class="line">  let count+=1</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
-<p>以上磁盘io指标详情见<a href>2022-12-19-磁盘IO相关指标</a></p>
+<p>以上磁盘io指标详情见<a href="https://abc.haloreo.xyz/2022/12/19/2022-12-19-%E7%A3%81%E7%9B%98IO%E7%9B%B8%E5%85%B3%E6%8C%87%E6%A0%87/">2022-12-19-磁盘IO相关指标</a></p>
 </li>
 <li>
 <p>通过上述指标抓取数据后，捕捉到相关异常</p>
@@ -677,10 +674,10 @@
 <p>进一步查看磁盘的trace详情，发现37s-43s左右各I/O请求均达到50s以后才转到C状态，均出现较大延迟</p>
 </li>
 </ol>
-<h3 id="阶段性结论"><a class="markdownIt-Anchor" href="#阶段性结论"></a> 阶段性结论</h3>
+<h2 id="阶段性结论"><a class="markdownIt-Anchor" href="#阶段性结论"></a> 阶段性结论</h2>
 <p>选主类重启是因为etcd响应慢，etcd响应慢是因为I/O请求卡在了D2C阶段。</p>
 <p>D2C代表IO请求在driver和硬件上所消耗的时间，因此下一阶段将排查磁盘硬件问题。</p>
-<h3 id="排查过程下"><a class="markdownIt-Anchor" href="#排查过程下"></a> 排查过程（下）</h3>
+<h2 id="排查过程下"><a class="markdownIt-Anchor" href="#排查过程下"></a> 排查过程（下）</h2>
 ]]></content>
       <categories>
         <category>问题排查与解决</category>
