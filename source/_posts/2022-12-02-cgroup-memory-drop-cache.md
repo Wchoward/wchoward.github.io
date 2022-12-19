@@ -5,9 +5,7 @@ tags: 网络, etcd, soft lockup
 categories: 问题排查与解决
 ---
 
-# cgroup memory drop cache
-
-## 服务器环境
+# 服务器环境
 
 - 架构
 
@@ -19,7 +17,7 @@ categories: 问题排查与解决
 
 <!--more-->
 
-## 问题现象描述
+# 问题现象描述
 
 - 网络丢包
 - 网卡up/down
@@ -28,9 +26,9 @@ categories: 问题排查与解决
 
 
 
-## 问题分析
+# 问题分析
 
-### 现象分析
+## 现象分析
 
 系统日志中出现 `soft lockup` （软锁死：当进程占用cpu时间超过2*watchdog_thresh会触发soft lockup）情况。
 
@@ -46,7 +44,7 @@ categories: 问题排查与解决
 
 同时通过`cat /sys/fs/cgroup/memory/memory.numa_stat`查看 memory.numa_stat，发现memory cgroup的hierarchical_total数也增加了很多，而实际去统计查看memory cgroup下的目录层级数量却很少。
 
-### 原因分析
+## 原因分析
 
 1. 导致出现大量memory group，以及cgroup统计数量与查看到的目录层级不一致的原因
 
@@ -110,14 +108,14 @@ categories: 问题排查与解决
 
    该接口通过遍历整个cgroup树来获取相关统计信息。当系统上整个cgroup树的层级以及节点增大时，其遍历过程的耗时将随之而递增。
 
-## 问题初步分析总结
+# 问题初步分析总结
 
 1. 在系统内核版本中，获取cgroup下numa_stat会随着cgroup的层级以及节点数量增大而耗时变长
 2. 通过合入memcg的优化补丁，能解决获取cgroup下numa_stat随着cgroup的层级以及节点数量增大而耗时变长问题
 
-## 问题解决方案
+# 问题解决方案
 
-### 临时解决方案——通过周期清理系统cache
+## 临时解决方案——通过周期清理系统cache
 
 问题出现时，通过`echo 3 > /proc/sys/vm/drop_caches`可以清理残留的cgroup内存页信息，减少memory cgroup数量以及层级数。因此，可采用周期性清理cache的方式规避numa_stat读取耗时过长问题。
 
@@ -134,7 +132,6 @@ fi
 
 
 
-### 稳定解决方案——升级内核小版本
+## 稳定解决方案——升级内核小版本
 
 统计速度慢问题时linux低版本内核通用问题，较新的linux社区内核已有针对cgroup内存统计的优化补丁。
-
