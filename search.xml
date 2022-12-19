@@ -344,11 +344,12 @@
     <title>2022-12-01-磁盘扩容</title>
     <url>/2022/12/01/2022-12-01-%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9/</url>
     <content><![CDATA[<h1 id="磁盘扩容"><a class="markdownIt-Anchor" href="#磁盘扩容"></a> 磁盘扩容</h1>
+<p>由于划盘的时候给逻辑卷划的空间太小了，后期需要扩盘，这篇文章主要记录了具体扩容的操作，以供参考。</p>
+<a id="more"></a>
 <ol>
 <li>
 <p><code>fdisk</code>创建新的分区</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">fdisk &#x2F;dev&#x2F;sda</span><br><span class="line">n</span><br><span class="line">+100G</span><br><span class="line">w</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
 </li>
 <li>
 <p>pvcreate`将物理硬盘分区初始化为物理卷，以便LVM使用</p>
@@ -418,7 +419,40 @@
 <li>soft lockup等多发现象</li>
 </ul>
 <h2 id="问题分析"><a class="markdownIt-Anchor" href="#问题分析"></a> 问题分析</h2>
-<p>系统日志中出现 <code>soft lockup</code> （软锁死：当进程占用cpu时间超过2*watchdog_thresh会触发soft lockup）情况</p>
+<h3 id="现象分析"><a class="markdownIt-Anchor" href="#现象分析"></a> 现象分析</h3>
+<p>系统日志中出现 <code>soft lockup</code> （软锁死：当进程占用cpu时间超过2*watchdog_thresh会触发soft lockup）情况。</p>
+<p>网卡采取多队列方式，每个网卡队列都有绑定到对应的一个CPU核上，当CPU核触发软锁死状态下，所在网卡队列软中断无法得到相应，从而影响卡网队列的数据收发，导致出现“网络丢包、etcd超时、网卡up/down”现象。</p>
+<p>通过查看日志中软锁死的信息，第一个以及大部分软锁死信息由kubelet产生。从kubelet进程堆栈打印信息，进程锁死在读取cgroup下<code>memory.numa_stat</code>信息过程中。</p>
+<p>尝试在有问题的机器上<code>cat /sys/fs/cgroup/memory/memory.numa_stat</code>手动读取cgroup信息，查询命令的执行完成消耗接近20秒，较正常的机器（微秒或毫秒级别）高出个级别，属于异常结果表现。</p>
+<p>针对上述现象通过<code>cat /proc/cgroups</code>去查看cgroup信息，发现 memory cgroup的数量（几万个）比正常机器（几百个）高出了几万个。</p>
+<p>同时通过<code>cat /sys/fs/cgroup/memory/memory.numa_stat</code>查看 memory.numa_stat，发现memory cgroup的hierarchical_total数也增加了很多，而实际去统计查看memory cgroup下的目录层级数量却很少。</p>
+<h3 id="原因分析"><a class="markdownIt-Anchor" href="#原因分析"></a> 原因分析</h3>
+<ol>
+<li>
+<p>导致出现大量memory group，以及cgroup统计数量与查看到的目录层级不一致的原因</p>
+<p>cgroup是通过cgroup/cgroup2伪文件系统来管理的，可以通过删除伪文件系统中的文件目录来删除相应的cgroup。</p>
+<p>统及应用的很多相关操作都会触发创建临时的cgroup节点，如容器创建、k8s任务pod创建、cron定时任务、用户登录等，当删除cgroup的目录后虽然用户态已经看不到它，但在内核中代表cgroup的结构体会一直存在知道所有对它的引用被释放。</p>
+<p>只有当被删除的memory cgroup中的页都被回收，相应的引用被释放，该memory cgroup才会彻底被删除，其时间与系统的回收机制有关，如果当中的一些页被活跃的使用，这些页可能永远不会被回收掉。</p>
+<p>因此会出现cgroup信息与查看到的目录层级不一致的现象。</p>
+</li>
+<li>
+<p>大量的memory cgroup对象是导致读取cgroup信息耗时变长的原因</p>
+<p>通过分析当前版本的内核源码，numa_stat的查看由memcg_numa_stat_show接口实现。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">memcg_numa_stat_show</span><span class="params">(struct seq_file *m, <span class="keyword">void</span> *v)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">numa_stat</span> &#123;</span></span><br><span class="line">		<span class="keyword">const</span> <span class="keyword">char</span> *name;</span><br><span class="line">		<span class="keyword">unsigned</span> <span class="keyword">int</span> lru_mask;</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">numa_stat</span> <span class="title">stats</span>[] =</span> &#123;</span><br><span class="line">		&#123; <span class="string">&quot;total&quot;</span>, LRU_ALL &#125;,</span><br><span class="line">		&#123; <span class="string">&quot;file&quot;</span>, LRU_ALL_FILE &#125;,</span><br><span class="line">		&#123; <span class="string">&quot;anon&quot;</span>, LRU_ALL_ANON &#125;,</span><br><span class="line">		&#123; <span class="string">&quot;unevictable&quot;</span>, BIT(LRU_UNEVICTABLE) &#125;,</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">numa_stat</span> *<span class="title">stat</span>;</span></span><br><span class="line">	<span class="keyword">int</span> nid;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> nr;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">mem_cgroup</span> *<span class="title">memcg</span> =</span> mem_cgroup_from_css(seq_css(m));</span><br><span class="line">	<span class="keyword">for</span> (stat = stats; stat &lt; stats + ARRAY_SIZE(stats); stat++) &#123;</span><br><span class="line">		nr = mem_cgroup_nr_lru_pages(memcg, stat-&gt;lru_mask);</span><br><span class="line">		seq_printf(m, <span class="string">&quot;%s=%lu&quot;</span>, stat-&gt;name, nr);</span><br><span class="line">		for_each_node_state(nid, N_MEMORY) &#123;</span><br><span class="line">			nr = mem_cgroup_node_nr_lru_pages(memcg, nid,</span><br><span class="line">							  stat-&gt;lru_mask);</span><br><span class="line">			seq_printf(m, <span class="string">&quot; N%d=%lu&quot;</span>, nid, nr);</span><br><span class="line">		&#125;</span><br><span class="line">		seq_putc(m, <span class="string">&#x27;\n&#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (stat = stats; stat &lt; stats + ARRAY_SIZE(stats); stat++) &#123;</span><br><span class="line">		<span class="class"><span class="keyword">struct</span> <span class="title">mem_cgroup</span> *<span class="title">iter</span>;</span></span><br><span class="line">		nr = <span class="number">0</span>;</span><br><span class="line">		for_each_mem_cgroup_tree(iter, memcg)</span><br><span class="line">			nr += mem_cgroup_nr_lru_pages(iter, stat-&gt;lru_mask);</span><br><span class="line">		seq_printf(m, <span class="string">&quot;hierarchical_%s=%lu&quot;</span>, stat-&gt;name, nr);</span><br><span class="line">		for_each_node_state(nid, N_MEMORY) &#123;</span><br><span class="line">			nr = <span class="number">0</span>;</span><br><span class="line">			for_each_mem_cgroup_tree(iter, memcg)</span><br><span class="line">				nr += mem_cgroup_node_nr_lru_pages(</span><br><span class="line">					iter, nid, stat-&gt;lru_mask);</span><br><span class="line">			seq_printf(m, <span class="string">&quot; N%d=%lu&quot;</span>, nid, nr);</span><br><span class="line">		&#125;</span><br><span class="line">		seq_putc(m, <span class="string">&#x27;\n&#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该接口通过遍历整个cgroup树来获取相关统计信息。当系统上整个cgroup树的层级以及节点增大时，其遍历过程的耗时将随之而递增。</p>
+</li>
+</ol>
+<h2 id="问题初步分析总结"><a class="markdownIt-Anchor" href="#问题初步分析总结"></a> 问题初步分析总结</h2>
+<ol>
+<li>在系统内核版本中，获取cgroup下numa_stat会随着cgroup的层级以及节点数量增大而耗时变长</li>
+<li>通过合入memcg的优化补丁，能解决获取cgroup下numa_stat随着cgroup的层级以及节点数量增大而耗时变长问题</li>
+</ol>
+<h2 id="问题解决方案"><a class="markdownIt-Anchor" href="#问题解决方案"></a> 问题解决方案</h2>
+<h3 id="临时解决方案通过周期清理系统cache"><a class="markdownIt-Anchor" href="#临时解决方案通过周期清理系统cache"></a> 临时解决方案——通过周期清理系统cache</h3>
+<p>问题出现时，通过<code>echo 3 &gt; /proc/sys/vm/drop_caches</code>可以清理残留的cgroup内存页信息，减少memory cgroup数量以及层级数。因此，可采用周期性清理cache的方式规避numa_stat读取耗时过长问题。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">timeout 3s cat /sys/fs/cgroup/memory/memory.numa_stat &gt; /dev/null</span><br><span class="line">if [ $? == 124 ];then</span><br><span class="line">  sync;sync;sync #写入硬盘，防止数据丢失</span><br><span class="line">  sleep 1 #延迟1s</span><br><span class="line">  echo 3 &gt; /proc/sys/vm/drop_caches</span><br><span class="line">  echo &quot;drop cache `date`&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<h3 id="稳定解决方案升级内核小版本"><a class="markdownIt-Anchor" href="#稳定解决方案升级内核小版本"></a> 稳定解决方案——升级内核小版本</h3>
+<p>统计速度慢问题时linux低版本内核通用问题，较新的linux社区内核已有针对cgroup内存统计的优化补丁。</p>
 ]]></content>
       <categories>
         <category>问题排查与解决</category>
