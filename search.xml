@@ -1,45 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Linux常用操作</title>
-    <url>/2020/10/08/2020-10-08-Linux%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/</url>
-    <content><![CDATA[<h3 id="gpu相关"><a class="markdownIt-Anchor" href="#gpu相关"></a> GPU相关</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># check gpu status</span></span><br><span class="line">$ nvidia-smi</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">$ gpustat</span><br><span class="line"></span><br><span class="line"><span class="comment"># set gpu visible</span></span><br><span class="line">$ <span class="built_in">export</span> CUDA_VISIBLE_DEVICES=5</span><br></pre></td></tr></table></figure>
-<h3 id="输出重定向"><a class="markdownIt-Anchor" href="#输出重定向"></a> 输出重定向</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">command</span> &amp;&gt; myout.log</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">$ comman &gt; myout.log 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
-<h3 id="后台运行进程"><a class="markdownIt-Anchor" href="#后台运行进程"></a> 后台运行进程</h3>
-<h4 id="screen"><a class="markdownIt-Anchor" href="#screen"></a> Screen</h4>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ screen -S <span class="built_in">test</span></span><br><span class="line">$ screen -r <span class="built_in">test</span></span><br><span class="line">$ screen -X -S <span class="built_in">test</span> quit</span><br></pre></td></tr></table></figure>
-<h4 id="nohup"><a class="markdownIt-Anchor" href="#nohup"></a> Nohup</h4>
-<ol>
-<li>创建进程</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建进程</span></span><br><span class="line">$ nohup <span class="built_in">command</span> &gt; myout.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>查看进程</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看进程</span></span><br><span class="line">$ <span class="built_in">jobs</span></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">$ ps -aux | grep <span class="built_in">command</span></span><br></pre></td></tr></table></figure>
-<ol start="3">
-<li>关闭进程</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># jobs 查看jobnum</span></span><br><span class="line">$ <span class="built_in">kill</span> %jobnum</span><br><span class="line"><span class="comment"># ps查看进程号PID</span></span><br><span class="line">$ <span class="built_in">kill</span> %PID</span><br></pre></td></tr></table></figure>
-<ol start="4">
-<li>进程前后台切换</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 后台调至前台</span></span><br><span class="line">$ <span class="built_in">fg</span> %jobnum</span><br><span class="line"><span class="comment"># 前台放到后台，并处于暂停状态</span></span><br><span class="line">$ Ctrl + z</span><br><span class="line"><span class="comment"># 后台暂停状态变执行</span></span><br><span class="line">$ <span class="built_in">bg</span> %jobnum</span><br></pre></td></tr></table></figure>
-<h3 id="查看磁盘使用情况"><a class="markdownIt-Anchor" href="#查看磁盘使用情况"></a> 查看磁盘使用情况</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 整体磁盘空间</span></span><br><span class="line">$ df -lh</span><br><span class="line"><span class="comment"># 当前目录下使用空间</span></span><br><span class="line">$ du --max-depth=1 -h</span><br></pre></td></tr></table></figure>
-<h4 id><a class="markdownIt-Anchor" href="#"></a> </h4>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>Shell</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2020-10-13-Papers-on-Emotion-Cause-Analysis</title>
     <url>/2020/10/13/2020-10-13-Papers-on-Emotion-Cause-Analysis/</url>
     <content><![CDATA[<h1 id="papers-on-emotion-cause-analysis"><a class="markdownIt-Anchor" href="#papers-on-emotion-cause-analysis"></a> Papers on Emotion Cause Analysis</h1>
@@ -93,6 +54,45 @@
       </categories>
       <tags>
         <tag>Emotion Cause</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux常用操作</title>
+    <url>/2020/10/08/2020-10-08-Linux%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<h3 id="gpu相关"><a class="markdownIt-Anchor" href="#gpu相关"></a> GPU相关</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># check gpu status</span></span><br><span class="line">$ nvidia-smi</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">$ gpustat</span><br><span class="line"></span><br><span class="line"><span class="comment"># set gpu visible</span></span><br><span class="line">$ <span class="built_in">export</span> CUDA_VISIBLE_DEVICES=5</span><br></pre></td></tr></table></figure>
+<h3 id="输出重定向"><a class="markdownIt-Anchor" href="#输出重定向"></a> 输出重定向</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">command</span> &amp;&gt; myout.log</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">$ comman &gt; myout.log 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<h3 id="后台运行进程"><a class="markdownIt-Anchor" href="#后台运行进程"></a> 后台运行进程</h3>
+<h4 id="screen"><a class="markdownIt-Anchor" href="#screen"></a> Screen</h4>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ screen -S <span class="built_in">test</span></span><br><span class="line">$ screen -r <span class="built_in">test</span></span><br><span class="line">$ screen -X -S <span class="built_in">test</span> quit</span><br></pre></td></tr></table></figure>
+<h4 id="nohup"><a class="markdownIt-Anchor" href="#nohup"></a> Nohup</h4>
+<ol>
+<li>创建进程</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建进程</span></span><br><span class="line">$ nohup <span class="built_in">command</span> &gt; myout.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>查看进程</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看进程</span></span><br><span class="line">$ <span class="built_in">jobs</span></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">$ ps -aux | grep <span class="built_in">command</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>关闭进程</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># jobs 查看jobnum</span></span><br><span class="line">$ <span class="built_in">kill</span> %jobnum</span><br><span class="line"><span class="comment"># ps查看进程号PID</span></span><br><span class="line">$ <span class="built_in">kill</span> %PID</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>进程前后台切换</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 后台调至前台</span></span><br><span class="line">$ <span class="built_in">fg</span> %jobnum</span><br><span class="line"><span class="comment"># 前台放到后台，并处于暂停状态</span></span><br><span class="line">$ Ctrl + z</span><br><span class="line"><span class="comment"># 后台暂停状态变执行</span></span><br><span class="line">$ <span class="built_in">bg</span> %jobnum</span><br></pre></td></tr></table></figure>
+<h3 id="查看磁盘使用情况"><a class="markdownIt-Anchor" href="#查看磁盘使用情况"></a> 查看磁盘使用情况</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 整体磁盘空间</span></span><br><span class="line">$ df -lh</span><br><span class="line"><span class="comment"># 当前目录下使用空间</span></span><br><span class="line">$ du --max-depth=1 -h</span><br></pre></td></tr></table></figure>
+<h4 id><a class="markdownIt-Anchor" href="#"></a> </h4>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Shell</tag>
       </tags>
   </entry>
   <entry>
@@ -341,125 +341,6 @@
       </tags>
   </entry>
   <entry>
-    <title>2022-12-01-磁盘扩容</title>
-    <url>/2022/12/01/2022-12-01-%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9/</url>
-    <content><![CDATA[<p>由于划盘的时候给逻辑卷划的空间太小了，后期需要扩盘，这篇文章主要记录了具体扩容的操作，以供参考。</p>
-<a id="more"></a>
-<ol>
-<li>
-<p><code>fdisk</code>创建新的分区</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">fdisk &#x2F;dev&#x2F;sda</span><br><span class="line">n</span><br><span class="line">+100G</span><br><span class="line">w</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>pvcreate`将物理硬盘分区初始化为物理卷，以便LVM使用</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pvcreate &#x2F;dev&#x2F;sda4</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p><code>vgextend</code>动态扩展LVM卷组</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vgextend vgsystem &#x2F;dev&#x2F;sda4</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p><code>lvextend</code>扩展逻辑卷空间大小</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">lvextend -L +100G &#x2F;dev&#x2F;vgsystem&#x2F;root</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p><code>resize2fs</code>增大或者收缩未加载的“ext2/ext3/ext4”文件系统的大小</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">resize2fs &#x2F;dev&#x2F;vgsystem&#x2F;root</span><br></pre></td></tr></table></figure></li>
-</ol>
-]]></content>
-      <categories>
-        <category>IaaS</category>
-      </categories>
-      <tags>
-        <tag>disk</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/01/12/hello-world/</url>
-    <content><![CDATA[<p>Test</p>
-<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="quick-start"><a class="markdownIt-Anchor" href="#quick-start"></a> Quick Start</h2>
-<h3 id="create-a-new-post"><a class="markdownIt-Anchor" href="#create-a-new-post"></a> Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="run-server"><a class="markdownIt-Anchor" href="#run-server"></a> Run server</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="generate-static-files"><a class="markdownIt-Anchor" href="#generate-static-files"></a> Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="deploy-to-remote-sites"><a class="markdownIt-Anchor" href="#deploy-to-remote-sites"></a> Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>2022-12-02-cgroup memory drop cache</title>
-    <url>/2022/12/02/2022-12-02-cgroup-memory-drop-cache/</url>
-    <content><![CDATA[<h1 id="服务器环境"><a class="markdownIt-Anchor" href="#服务器环境"></a> 服务器环境</h1>
-<ul>
-<li>
-<p>架构</p>
-<p>海光X86</p>
-</li>
-<li>
-<p>内核版本</p>
-<p>4.19.90-23.15.v2101.ky10.x86_64</p>
-</li>
-</ul>
-<a id="more"></a>
-<h1 id="问题现象描述"><a class="markdownIt-Anchor" href="#问题现象描述"></a> 问题现象描述</h1>
-<ul>
-<li>网络丢包</li>
-<li>网卡up/down</li>
-<li>etcd超时</li>
-<li>soft lockup等多发现象</li>
-</ul>
-<h1 id="问题分析"><a class="markdownIt-Anchor" href="#问题分析"></a> 问题分析</h1>
-<h2 id="现象分析"><a class="markdownIt-Anchor" href="#现象分析"></a> 现象分析</h2>
-<p>系统日志中出现 <code>soft lockup</code> （软锁死：当进程占用cpu时间超过2*watchdog_thresh会触发soft lockup）情况。</p>
-<p>网卡采取多队列方式，每个网卡队列都有绑定到对应的一个CPU核上，当CPU核触发软锁死状态下，所在网卡队列软中断无法得到相应，从而影响卡网队列的数据收发，导致出现“网络丢包、etcd超时、网卡up/down”现象。</p>
-<p>通过查看日志中软锁死的信息，第一个以及大部分软锁死信息由kubelet产生。从kubelet进程堆栈打印信息，进程锁死在读取cgroup下<code>memory.numa_stat</code>信息过程中。</p>
-<p>尝试在有问题的机器上<code>cat /sys/fs/cgroup/memory/memory.numa_stat</code>手动读取cgroup信息，查询命令的执行完成消耗接近20秒，较正常的机器（微秒或毫秒级别）高出个级别，属于异常结果表现。</p>
-<p>针对上述现象通过<code>cat /proc/cgroups</code>去查看cgroup信息，发现 memory cgroup的数量（几万个）比正常机器（几百个）高出了几万个。</p>
-<p>同时通过<code>cat /sys/fs/cgroup/memory/memory.numa_stat</code>查看 memory.numa_stat，发现memory cgroup的hierarchical_total数也增加了很多，而实际去统计查看memory cgroup下的目录层级数量却很少。</p>
-<h2 id="原因分析"><a class="markdownIt-Anchor" href="#原因分析"></a> 原因分析</h2>
-<ol>
-<li>
-<p>导致出现大量memory group，以及cgroup统计数量与查看到的目录层级不一致的原因</p>
-<p>cgroup是通过cgroup/cgroup2伪文件系统来管理的，可以通过删除伪文件系统中的文件目录来删除相应的cgroup。</p>
-<p>统及应用的很多相关操作都会触发创建临时的cgroup节点，如容器创建、k8s任务pod创建、cron定时任务、用户登录等，当删除cgroup的目录后虽然用户态已经看不到它，但在内核中代表cgroup的结构体会一直存在知道所有对它的引用被释放。</p>
-<p>只有当被删除的memory cgroup中的页都被回收，相应的引用被释放，该memory cgroup才会彻底被删除，其时间与系统的回收机制有关，如果当中的一些页被活跃的使用，这些页可能永远不会被回收掉。</p>
-<p>因此会出现cgroup信息与查看到的目录层级不一致的现象。</p>
-</li>
-<li>
-<p>大量的memory cgroup对象是导致读取cgroup信息耗时变长的原因</p>
-<p>通过分析当前版本的内核源码，numa_stat的查看由memcg_numa_stat_show接口实现。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">memcg_numa_stat_show</span><span class="params">(struct seq_file *m, <span class="keyword">void</span> *v)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">numa_stat</span> &#123;</span></span><br><span class="line">		<span class="keyword">const</span> <span class="keyword">char</span> *name;</span><br><span class="line">		<span class="keyword">unsigned</span> <span class="keyword">int</span> lru_mask;</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">numa_stat</span> <span class="title">stats</span>[] =</span> &#123;</span><br><span class="line">		&#123; <span class="string">&quot;total&quot;</span>, LRU_ALL &#125;,</span><br><span class="line">		&#123; <span class="string">&quot;file&quot;</span>, LRU_ALL_FILE &#125;,</span><br><span class="line">		&#123; <span class="string">&quot;anon&quot;</span>, LRU_ALL_ANON &#125;,</span><br><span class="line">		&#123; <span class="string">&quot;unevictable&quot;</span>, BIT(LRU_UNEVICTABLE) &#125;,</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">numa_stat</span> *<span class="title">stat</span>;</span></span><br><span class="line">	<span class="keyword">int</span> nid;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> nr;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">mem_cgroup</span> *<span class="title">memcg</span> =</span> mem_cgroup_from_css(seq_css(m));</span><br><span class="line">	<span class="keyword">for</span> (stat = stats; stat &lt; stats + ARRAY_SIZE(stats); stat++) &#123;</span><br><span class="line">		nr = mem_cgroup_nr_lru_pages(memcg, stat-&gt;lru_mask);</span><br><span class="line">		seq_printf(m, <span class="string">&quot;%s=%lu&quot;</span>, stat-&gt;name, nr);</span><br><span class="line">		for_each_node_state(nid, N_MEMORY) &#123;</span><br><span class="line">			nr = mem_cgroup_node_nr_lru_pages(memcg, nid,</span><br><span class="line">							  stat-&gt;lru_mask);</span><br><span class="line">			seq_printf(m, <span class="string">&quot; N%d=%lu&quot;</span>, nid, nr);</span><br><span class="line">		&#125;</span><br><span class="line">		seq_putc(m, <span class="string">&#x27;\n&#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (stat = stats; stat &lt; stats + ARRAY_SIZE(stats); stat++) &#123;</span><br><span class="line">		<span class="class"><span class="keyword">struct</span> <span class="title">mem_cgroup</span> *<span class="title">iter</span>;</span></span><br><span class="line">		nr = <span class="number">0</span>;</span><br><span class="line">		for_each_mem_cgroup_tree(iter, memcg)</span><br><span class="line">			nr += mem_cgroup_nr_lru_pages(iter, stat-&gt;lru_mask);</span><br><span class="line">		seq_printf(m, <span class="string">&quot;hierarchical_%s=%lu&quot;</span>, stat-&gt;name, nr);</span><br><span class="line">		for_each_node_state(nid, N_MEMORY) &#123;</span><br><span class="line">			nr = <span class="number">0</span>;</span><br><span class="line">			for_each_mem_cgroup_tree(iter, memcg)</span><br><span class="line">				nr += mem_cgroup_node_nr_lru_pages(</span><br><span class="line">					iter, nid, stat-&gt;lru_mask);</span><br><span class="line">			seq_printf(m, <span class="string">&quot; N%d=%lu&quot;</span>, nid, nr);</span><br><span class="line">		&#125;</span><br><span class="line">		seq_putc(m, <span class="string">&#x27;\n&#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>该接口通过遍历整个cgroup树来获取相关统计信息。当系统上整个cgroup树的层级以及节点增大时，其遍历过程的耗时将随之而递增。</p>
-</li>
-</ol>
-<h1 id="问题初步分析总结"><a class="markdownIt-Anchor" href="#问题初步分析总结"></a> 问题初步分析总结</h1>
-<ol>
-<li>在系统内核版本中，获取cgroup下numa_stat会随着cgroup的层级以及节点数量增大而耗时变长</li>
-<li>通过合入memcg的优化补丁，能解决获取cgroup下numa_stat随着cgroup的层级以及节点数量增大而耗时变长问题</li>
-</ol>
-<h1 id="问题解决方案"><a class="markdownIt-Anchor" href="#问题解决方案"></a> 问题解决方案</h1>
-<h2 id="临时解决方案通过周期清理系统cache"><a class="markdownIt-Anchor" href="#临时解决方案通过周期清理系统cache"></a> 临时解决方案——通过周期清理系统cache</h2>
-<p>问题出现时，通过<code>echo 3 &gt; /proc/sys/vm/drop_caches</code>可以清理残留的cgroup内存页信息，减少memory cgroup数量以及层级数。因此，可采用周期性清理cache的方式规避numa_stat读取耗时过长问题。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">timeout 3s cat /sys/fs/cgroup/memory/memory.numa_stat &gt; /dev/null</span><br><span class="line">if [ $? == 124 ];then</span><br><span class="line">  sync;sync;sync #写入硬盘，防止数据丢失</span><br><span class="line">  sleep 1 #延迟1s</span><br><span class="line">  echo 3 &gt; /proc/sys/vm/drop_caches</span><br><span class="line">  echo &quot;drop cache `date`&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-<h2 id="稳定解决方案升级内核小版本"><a class="markdownIt-Anchor" href="#稳定解决方案升级内核小版本"></a> 稳定解决方案——升级内核小版本</h2>
-<p>统计速度慢问题时linux低版本内核通用问题，较新的linux社区内核已有针对cgroup内存统计的优化补丁。</p>
-]]></content>
-      <categories>
-        <category>问题排查与解决</category>
-      </categories>
-      <tags>
-        <tag>网络, etcd, soft lockup</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2022-08-31-Docker从入门到放弃(1)</title>
     <url>/2022/08/31/2022-08-31-Docker%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83-1/</url>
     <content><![CDATA[<h1 id="docker安装"><a class="markdownIt-Anchor" href="#docker安装"></a> Docker安装</h1>
@@ -619,6 +500,105 @@
       </tags>
   </entry>
   <entry>
+    <title>2022-12-01-磁盘扩容</title>
+    <url>/2022/12/01/2022-12-01-%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9/</url>
+    <content><![CDATA[<p>由于划盘的时候给逻辑卷划的空间太小了，后期需要扩盘，这篇文章主要记录了具体扩容的操作，以供参考。</p>
+<a id="more"></a>
+<ol>
+<li>
+<p><code>fdisk</code>创建新的分区</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">fdisk &#x2F;dev&#x2F;sda</span><br><span class="line">n</span><br><span class="line">+100G</span><br><span class="line">w</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>pvcreate`将物理硬盘分区初始化为物理卷，以便LVM使用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pvcreate &#x2F;dev&#x2F;sda4</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><code>vgextend</code>动态扩展LVM卷组</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vgextend vgsystem &#x2F;dev&#x2F;sda4</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><code>lvextend</code>扩展逻辑卷空间大小</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">lvextend -L +100G &#x2F;dev&#x2F;vgsystem&#x2F;root</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><code>resize2fs</code>增大或者收缩未加载的“ext2/ext3/ext4”文件系统的大小</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">resize2fs &#x2F;dev&#x2F;vgsystem&#x2F;root</span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+      <categories>
+        <category>IaaS</category>
+      </categories>
+      <tags>
+        <tag>disk</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2022-12-02-cgroup memory drop cache</title>
+    <url>/2022/12/02/2022-12-02-cgroup-memory-drop-cache/</url>
+    <content><![CDATA[<h1 id="服务器环境"><a class="markdownIt-Anchor" href="#服务器环境"></a> 服务器环境</h1>
+<ul>
+<li>
+<p>架构</p>
+<p>海光X86</p>
+</li>
+<li>
+<p>内核版本</p>
+<p>4.19.90-23.15.v2101.ky10.x86_64</p>
+</li>
+</ul>
+<a id="more"></a>
+<h1 id="问题现象描述"><a class="markdownIt-Anchor" href="#问题现象描述"></a> 问题现象描述</h1>
+<ul>
+<li>网络丢包</li>
+<li>网卡up/down</li>
+<li>etcd超时</li>
+<li>soft lockup等多发现象</li>
+</ul>
+<h1 id="问题分析"><a class="markdownIt-Anchor" href="#问题分析"></a> 问题分析</h1>
+<h2 id="现象分析"><a class="markdownIt-Anchor" href="#现象分析"></a> 现象分析</h2>
+<p>系统日志中出现 <code>soft lockup</code> （软锁死：当进程占用cpu时间超过2*watchdog_thresh会触发soft lockup）情况。</p>
+<p>网卡采取多队列方式，每个网卡队列都有绑定到对应的一个CPU核上，当CPU核触发软锁死状态下，所在网卡队列软中断无法得到相应，从而影响卡网队列的数据收发，导致出现“网络丢包、etcd超时、网卡up/down”现象。</p>
+<p>通过查看日志中软锁死的信息，第一个以及大部分软锁死信息由kubelet产生。从kubelet进程堆栈打印信息，进程锁死在读取cgroup下<code>memory.numa_stat</code>信息过程中。</p>
+<p>尝试在有问题的机器上<code>cat /sys/fs/cgroup/memory/memory.numa_stat</code>手动读取cgroup信息，查询命令的执行完成消耗接近20秒，较正常的机器（微秒或毫秒级别）高出个级别，属于异常结果表现。</p>
+<p>针对上述现象通过<code>cat /proc/cgroups</code>去查看cgroup信息，发现 memory cgroup的数量（几万个）比正常机器（几百个）高出了几万个。</p>
+<p>同时通过<code>cat /sys/fs/cgroup/memory/memory.numa_stat</code>查看 memory.numa_stat，发现memory cgroup的hierarchical_total数也增加了很多，而实际去统计查看memory cgroup下的目录层级数量却很少。</p>
+<h2 id="原因分析"><a class="markdownIt-Anchor" href="#原因分析"></a> 原因分析</h2>
+<ol>
+<li>
+<p>导致出现大量memory group，以及cgroup统计数量与查看到的目录层级不一致的原因</p>
+<p>cgroup是通过cgroup/cgroup2伪文件系统来管理的，可以通过删除伪文件系统中的文件目录来删除相应的cgroup。</p>
+<p>统及应用的很多相关操作都会触发创建临时的cgroup节点，如容器创建、k8s任务pod创建、cron定时任务、用户登录等，当删除cgroup的目录后虽然用户态已经看不到它，但在内核中代表cgroup的结构体会一直存在知道所有对它的引用被释放。</p>
+<p>只有当被删除的memory cgroup中的页都被回收，相应的引用被释放，该memory cgroup才会彻底被删除，其时间与系统的回收机制有关，如果当中的一些页被活跃的使用，这些页可能永远不会被回收掉。</p>
+<p>因此会出现cgroup信息与查看到的目录层级不一致的现象。</p>
+</li>
+<li>
+<p>大量的memory cgroup对象是导致读取cgroup信息耗时变长的原因</p>
+<p>通过分析当前版本的内核源码，numa_stat的查看由memcg_numa_stat_show接口实现。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">memcg_numa_stat_show</span><span class="params">(struct seq_file *m, <span class="keyword">void</span> *v)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">numa_stat</span> &#123;</span></span><br><span class="line">		<span class="keyword">const</span> <span class="keyword">char</span> *name;</span><br><span class="line">		<span class="keyword">unsigned</span> <span class="keyword">int</span> lru_mask;</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">numa_stat</span> <span class="title">stats</span>[] =</span> &#123;</span><br><span class="line">		&#123; <span class="string">&quot;total&quot;</span>, LRU_ALL &#125;,</span><br><span class="line">		&#123; <span class="string">&quot;file&quot;</span>, LRU_ALL_FILE &#125;,</span><br><span class="line">		&#123; <span class="string">&quot;anon&quot;</span>, LRU_ALL_ANON &#125;,</span><br><span class="line">		&#123; <span class="string">&quot;unevictable&quot;</span>, BIT(LRU_UNEVICTABLE) &#125;,</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">numa_stat</span> *<span class="title">stat</span>;</span></span><br><span class="line">	<span class="keyword">int</span> nid;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> nr;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">mem_cgroup</span> *<span class="title">memcg</span> =</span> mem_cgroup_from_css(seq_css(m));</span><br><span class="line">	<span class="keyword">for</span> (stat = stats; stat &lt; stats + ARRAY_SIZE(stats); stat++) &#123;</span><br><span class="line">		nr = mem_cgroup_nr_lru_pages(memcg, stat-&gt;lru_mask);</span><br><span class="line">		seq_printf(m, <span class="string">&quot;%s=%lu&quot;</span>, stat-&gt;name, nr);</span><br><span class="line">		for_each_node_state(nid, N_MEMORY) &#123;</span><br><span class="line">			nr = mem_cgroup_node_nr_lru_pages(memcg, nid,</span><br><span class="line">							  stat-&gt;lru_mask);</span><br><span class="line">			seq_printf(m, <span class="string">&quot; N%d=%lu&quot;</span>, nid, nr);</span><br><span class="line">		&#125;</span><br><span class="line">		seq_putc(m, <span class="string">&#x27;\n&#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (stat = stats; stat &lt; stats + ARRAY_SIZE(stats); stat++) &#123;</span><br><span class="line">		<span class="class"><span class="keyword">struct</span> <span class="title">mem_cgroup</span> *<span class="title">iter</span>;</span></span><br><span class="line">		nr = <span class="number">0</span>;</span><br><span class="line">		for_each_mem_cgroup_tree(iter, memcg)</span><br><span class="line">			nr += mem_cgroup_nr_lru_pages(iter, stat-&gt;lru_mask);</span><br><span class="line">		seq_printf(m, <span class="string">&quot;hierarchical_%s=%lu&quot;</span>, stat-&gt;name, nr);</span><br><span class="line">		for_each_node_state(nid, N_MEMORY) &#123;</span><br><span class="line">			nr = <span class="number">0</span>;</span><br><span class="line">			for_each_mem_cgroup_tree(iter, memcg)</span><br><span class="line">				nr += mem_cgroup_node_nr_lru_pages(</span><br><span class="line">					iter, nid, stat-&gt;lru_mask);</span><br><span class="line">			seq_printf(m, <span class="string">&quot; N%d=%lu&quot;</span>, nid, nr);</span><br><span class="line">		&#125;</span><br><span class="line">		seq_putc(m, <span class="string">&#x27;\n&#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该接口通过遍历整个cgroup树来获取相关统计信息。当系统上整个cgroup树的层级以及节点增大时，其遍历过程的耗时将随之而递增。</p>
+</li>
+</ol>
+<h1 id="问题初步分析总结"><a class="markdownIt-Anchor" href="#问题初步分析总结"></a> 问题初步分析总结</h1>
+<ol>
+<li>在系统内核版本中，获取cgroup下numa_stat会随着cgroup的层级以及节点数量增大而耗时变长</li>
+<li>通过合入memcg的优化补丁，能解决获取cgroup下numa_stat随着cgroup的层级以及节点数量增大而耗时变长问题</li>
+</ol>
+<h1 id="问题解决方案"><a class="markdownIt-Anchor" href="#问题解决方案"></a> 问题解决方案</h1>
+<h2 id="临时解决方案通过周期清理系统cache"><a class="markdownIt-Anchor" href="#临时解决方案通过周期清理系统cache"></a> 临时解决方案——通过周期清理系统cache</h2>
+<p>问题出现时，通过<code>echo 3 &gt; /proc/sys/vm/drop_caches</code>可以清理残留的cgroup内存页信息，减少memory cgroup数量以及层级数。因此，可采用周期性清理cache的方式规避numa_stat读取耗时过长问题。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">timeout 3s cat /sys/fs/cgroup/memory/memory.numa_stat &gt; /dev/null</span><br><span class="line">if [ $? == 124 ];then</span><br><span class="line">  sync;sync;sync #写入硬盘，防止数据丢失</span><br><span class="line">  sleep 1 #延迟1s</span><br><span class="line">  echo 3 &gt; /proc/sys/vm/drop_caches</span><br><span class="line">  echo &quot;drop cache `date`&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<h2 id="稳定解决方案升级内核小版本"><a class="markdownIt-Anchor" href="#稳定解决方案升级内核小版本"></a> 稳定解决方案——升级内核小版本</h2>
+<p>统计速度慢问题时linux低版本内核通用问题，较新的linux社区内核已有针对cgroup内存统计的优化补丁。</p>
+]]></content>
+      <categories>
+        <category>问题排查与解决</category>
+      </categories>
+      <tags>
+        <tag>网络, etcd, soft lockup</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2022-12-19-K8S ETCD超时磁盘问题排查与分析</title>
     <url>/2022/12/19/2022-12-19-K8S-ETCD%E8%B6%85%E6%97%B6%E7%A3%81%E7%9B%98%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E4%B8%8E%E5%88%86%E6%9E%90/</url>
     <content><![CDATA[<p>在K8S集群中，存在选主类管理组件重启和etcd WAL sync超时的告警。该文章主要记录对应的排查思路与分析。</p>
@@ -702,5 +682,25 @@
     <title>2022-12-19-磁盘IO相关指标</title>
     <url>/2022/12/19/2022-12-19-%E7%A3%81%E7%9B%98IO%E7%9B%B8%E5%85%B3%E5%B7%A5%E5%85%B7%E5%8F%8A%E6%8C%87%E6%A0%87/</url>
     <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/01/12/hello-world/</url>
+    <content><![CDATA[<p>Test</p>
+<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="quick-start"><a class="markdownIt-Anchor" href="#quick-start"></a> Quick Start</h2>
+<h3 id="create-a-new-post"><a class="markdownIt-Anchor" href="#create-a-new-post"></a> Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="run-server"><a class="markdownIt-Anchor" href="#run-server"></a> Run server</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="generate-static-files"><a class="markdownIt-Anchor" href="#generate-static-files"></a> Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="deploy-to-remote-sites"><a class="markdownIt-Anchor" href="#deploy-to-remote-sites"></a> Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
   </entry>
 </search>
