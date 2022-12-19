@@ -620,4 +620,78 @@
         <tag>Docker</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2022-12-19-K8S ETCD超时磁盘问题排查与分析</title>
+    <url>/2022/12/19/2022-12-19-K8S-ETCD%E8%B6%85%E6%97%B6%E7%A3%81%E7%9B%98%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E4%B8%8E%E5%88%86%E6%9E%90/</url>
+    <content><![CDATA[<h1 id="k8s-etcd超时磁盘问题排查与分析"><a class="markdownIt-Anchor" href="#k8s-etcd超时磁盘问题排查与分析"></a> K8S ETCD超时磁盘问题排查与分析</h1>
+<p>在K8S集群中，存在选主类管理组件重启和etcd WAL sync超时的告警。该文章主要记录对应的排查思路与分析。</p>
+<a id="more"></a>
+<h2 id="问题现象描述"><a class="markdownIt-Anchor" href="#问题现象描述"></a> 问题现象描述</h2>
+<p>K8S选主类组件发生告警：</p>
+<blockquote>
+<p>POD kube-controller-manager-{IP}频繁重启，当前POD累计重启2次</p>
+</blockquote>
+<h2 id="问题排查与分析"><a class="markdownIt-Anchor" href="#问题排查与分析"></a> 问题排查与分析</h2>
+<h3 id="排查思路"><a class="markdownIt-Anchor" href="#排查思路"></a> 排查思路</h3>
+<p>选主类管理组件的选主请求路径为：</p>
+<blockquote>
+<p>选主类pod --&gt; F5 --&gt; apiserver --&gt; etcd --&gt; 磁盘</p>
+</blockquote>
+<h3 id="排查过程上"><a class="markdownIt-Anchor" href="#排查过程上"></a> 排查过程（上）</h3>
+<h4 id="日志"><a class="markdownIt-Anchor" href="#日志"></a> 日志</h4>
+<ol>
+<li>
+<p>查看重启POD kube-controller-manaer的日志，在11:34:51有选主请求超时引起的主丢失的报错</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">E1126 leaderelection.go] Failed to update lock: context deadline exceeded</span><br><span class="line">I1126 leaderelection.go] Failed to renew lease kube-system&#x2F;kube-controller-manager: timed out waiting for the condition</span><br><span class="line">I1126 event.go] &quot;Event occurred&quot; object&#x3D;&quot;kube-system&#x2F;kube-controller-manager&quot; reason&#x3D;&quot;LeaderElection&quot; message&#x3D;&quot;xxx stopped leading&quot;</span><br><span class="line">F1126 controllermanager.go] leaderelection lost</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>选主过程涉及到etcd更新和查询分布式锁，排查etcd日志，在etcd上有请求超时的报错（9.95s）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">2022-11-26 11:34:51 W|etcdserver: read-only range request &quot;key:\&quot;&#x2F;registry&#x2F;services&#x2F;endpoints&#x2F;kube-system&#x2F;kube-controller-manager\&quot; &quot;with result &quot;range_response_count: 1 size:623&quot; took too long (9.95s) to execute</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>进一步排查上下文，发现在报错时间上下文持续发生grpc error，且有wal sync超过12s的报错</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">WARNING: 2022&#x2F;11&#x2F;26 11:34:43 grpc: Server.processUnaryRPC failed to write status: connection error: desc &#x3D; &quot;transport is closing&quot;</span><br><span class="line">2022-11-26 11:34:51 W| wal: sync duration of 12.72s, expected less than 1s</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="指标"><a class="markdownIt-Anchor" href="#指标"></a> 指标</h4>
+<p>从请求路径上日志报错来看，存在请求超时，且跟网络和磁盘强相关，进一步查看etcd网络和磁盘相关指标，发现：</p>
+<ol>
+<li>
+<p>etcd网络指标<code>etcd_network_peer_round_trip_time_seconds_bucket</code>在告警时间段无异常</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># PMQL Metrics</span><br><span class="line">histogram_quantile(1, sum(rate(etcd_network_peer_round_trip_time_seconds_bucket[5m])) by (instance, le))</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>etcd磁盘指标<code>etcd_disk_wal_fsync_duration_seconds_bucket</code>在告警时间段出现很大涨幅</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># PMQL Metrics</span><br><span class="line">histogram_quantile(1, sum(rate(etcd_network_peer_round_trip_time_seconds_bucket[5m])) by (instance, le))</span><br></pre></td></tr></table></figure>
+<p>因此，为进一步排查磁盘IO相关信息，在报错时间点前后1h抓取磁盘io相关数据：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 磁盘io数据抓取</span></span><br><span class="line">pidstat -d 1 3600 &gt;&gt; pidstat.log</span><br><span class="line">top -d 1 -n 3600 -b | tee topd.log</span><br><span class="line">iostat -d 1 -t 3600 &gt;&gt; iostat.log</span><br><span class="line">sh run_sdc_blktrace.sh</span><br></pre></td></tr></table></figure>
+<p>其中，<code>run_sdc_blktrace.sh</code>具体脚本为：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">dt0=`date + &quot;%Y%m%d%H&quot;`</span><br><span class="line">mkdir /root/sdc-trace-$&#123;dt0&#125;</span><br><span class="line">count=0</span><br><span class="line">while [ $count -lt 60 ]</span><br><span class="line">do</span><br><span class="line">  cd /root/sdc-trace-$&#123;dt0&#125;</span><br><span class="line">  dt=`date + &quot;%Y%m%d%H%M%S&quot;`</span><br><span class="line">  dir=&quot;sdc-trace&quot;-$&#123;dt&#125;</span><br><span class="line">  mkdir $&#123;dir&#125;</span><br><span class="line">  blktrace -d /dev/sdc -o sdc-trace -w 60</span><br><span class="line">  blkparse -i sdc-trace -d sdc.blktrace.bin -o sdc-trace.txt</span><br><span class="line">  btt -i sdc.blktrace.bin -o btt.txt</span><br><span class="line">  let count+=1</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>以上磁盘io指标详情见<a href>2022-12-19-磁盘IO相关指标</a></p>
+</li>
+<li>
+<p>通过上述指标抓取数据后，捕捉到相关异常</p>
+<p>在报错期间，etcd所在盘(sdc)的iostat数据全是0</p>
+<p>btt.txt.avg呈现的blktrace数据显式，D2C的MAX值达到了12s以上</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; All Devices &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">ALL          MIN          AVG          MAX          N</span><br><span class="line">----------   ----------   ----------   ----------   ----------</span><br><span class="line">Q2Q          0.000003     0.019        7.212        3027</span><br><span class="line">Q2G          0.000003     0.000003     0.000003     2429</span><br><span class="line">G2I          0.000003     0.000003     0.000003     2429</span><br><span class="line">Q2M          0.000002     0.000002     0.000002     605</span><br><span class="line">I2D          0.000003     0.000003     0.000003     2417</span><br><span class="line">M2D          0.000002     0.000002     0.000002     605</span><br><span class="line">D2C          0.003        0.029        12.83        3022</span><br><span class="line">Q2C          0.003        0.029        12.83        3022</span><br></pre></td></tr></table></figure>
+<p>进一步查看磁盘的trace详情，发现37s-43s左右各I/O请求均达到50s以后才转到C状态，均出现较大延迟</p>
+</li>
+</ol>
+<h3 id="阶段性结论"><a class="markdownIt-Anchor" href="#阶段性结论"></a> 阶段性结论</h3>
+<p>选主类重启是因为etcd响应慢，etcd响应慢是因为I/O请求卡在了D2C阶段。</p>
+<p>D2C代表IO请求在driver和硬件上所消耗的时间，因此下一阶段将排查磁盘硬件问题。</p>
+<h3 id="排查过程下"><a class="markdownIt-Anchor" href="#排查过程下"></a> 排查过程（下）</h3>
+]]></content>
+      <categories>
+        <category>问题排查与解决</category>
+      </categories>
+      <tags>
+        <tag>PAAS, K8S, etcd, disk</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2022-12-19-磁盘IO相关指标</title>
+    <url>/2022/12/19/2022-12-19-%E7%A3%81%E7%9B%98IO%E7%9B%B8%E5%85%B3%E6%8C%87%E6%A0%87/</url>
+    <content><![CDATA[]]></content>
+  </entry>
 </search>
